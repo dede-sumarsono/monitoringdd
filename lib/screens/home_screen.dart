@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:monitoringdd/screens/login_screen.dart';
 import 'package:monitoringdd/services/auth.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +14,24 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  final storage = new FlutterSecureStorage();
+
+  @override
+  void initState() {
+    readToken();
+    super.initState();
+  }
+
+  void readToken() async {
+
+    String? token = await storage.read(key: 'token');
+    Provider.of<Auth>(context,listen: false)
+        .getToken(token: token);
+    print(token);
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,16 +65,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       CircleAvatar(
                         backgroundColor: Colors.white,
+                        //backgroundImage: NetworkImage(auth.user.avatar),
                         radius: 30,
                       ),
                       SizedBox(height: 10,),
-                      Text('Dede Sumarsono',
+                      Text(auth.user!.username,
                           style: TextStyle(color: Colors.white)),
                       SizedBox(height: 10,),
-                      Text('dede@gmail.com'
-                          ''
-                          ''
-                          '',
+                      Text(auth.user!.email,
                           style: TextStyle(color: Colors.white)),
                     ],
                   ),

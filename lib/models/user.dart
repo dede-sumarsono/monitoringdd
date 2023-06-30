@@ -1,9 +1,9 @@
 
 class User{
-  late String username;
-  late String email;
-  late String notelepon;
-  late int level;
+  String username;
+  String email;
+  String notelepon;
+  int level;
 
   User ({required this.username, required this.email, required this.notelepon, required this.level});
 
