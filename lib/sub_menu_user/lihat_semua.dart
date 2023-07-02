@@ -21,16 +21,16 @@ class _LihatSemuaState extends State<LihatSemua> {
 
 
   final List<Map<String, dynamic>> _allData = [
-    {"id": 1, "name": "Andy", "age": 29},
-    {"id": 2, "name": "Aragon", "age": 40},
-    {"id": 3, "name": "Bob", "age": 5},
-    {"id": 4, "name": "Barbara", "age": 35},
-    {"id": 5, "name": "Candy", "age": 21},
-    {"id": 6, "name": "Colin", "age": 55},
-    {"id": 7, "name": "Audra", "age": 30},
-    {"id": 8, "name": "Banana", "age": 14},
-    {"id": 9, "name": "Caversky", "age": 100},
-    {"id": 10, "name": "Becky", "age": 32},
+    {"id": 1, "name": "Andy", "jenis_layanan": 'Peralihan Hak', "proses":"Pendaftaran Baru"},
+    {"id": 2, "name": "Aragon", "jenis_layanan": 'Peralihan Hak', "proses":"Pendaftaran Baru"},
+    {"id": 3, "name": "Bob", "jenis_layanan": 'Peralihan Hak', "proses":"Pendaftaran Baru"},
+    {"id": 4, "name": "Barbara", "jenis_layanan": 'Peralihan Hak', "proses":"Pendaftaran Baru"},
+    {"id": 5, "name": "Candy", "jenis_layanan": 'Hak Tanggungan', "proses":"Pendaftaran Baru"},
+    {"id": 6, "name": "Colin", "jenis_layanan": 'Hak Tanggungan', "proses":"Pendaftaran Baru"},
+    {"id": 7, "name": "Audra", "jenis_layanan": 'Hak Tanggungan', "proses":"Pendaftaran Baru"},
+    {"id": 8, "name": "Banana", "jenis_layanan": 'Hak Tanggungan', "proses":"Pendaftaran Baru"},
+    {"id": 9, "name": "Caversky", "jenis_layanan": 'Peralihan Hak', "proses":"Pendaftaran Baru"},
+    {"id": 10, "name": "Becky", "jenis_layanan": 'Peralihan Hak', "proses":"Pendaftaran Baru"},
   ];
   List<Map<String, dynamic>> _foundData = [];
 
@@ -83,7 +83,7 @@ class _LihatSemuaState extends State<LihatSemua> {
               height: 30,
             ),
             Text(
-              'Daftar Pesanan Layanan ',
+              'Daftar Layanan ',
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -120,7 +120,7 @@ class _LihatSemuaState extends State<LihatSemua> {
             Expanded(
               child: ListView.builder(
                 //itemCount: jsonList == null ? 0 : jsonList.length,
-                  itemCount: _foundData == null ? 0: _foundData.length,
+                  itemCount: _foundData == null ? 0 : _foundData.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Card(
                         child: ListTile(

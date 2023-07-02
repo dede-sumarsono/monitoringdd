@@ -2,10 +2,12 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:monitoringdd/models/user.dart';
+import 'package:monitoringdd/screens/home_screen_navbar.dart';
 import 'package:monitoringdd/screens/login_screen.dart';
 import 'package:monitoringdd/screens/register_screen.dart';
 import 'package:monitoringdd/services/auth.dart';
 import 'package:monitoringdd/sub_menu_user/lihat_semua.dart';
+import 'package:monitoringdd/sub_menu_user/lihat_semua_detail.dart';
 import 'package:provider/provider.dart';
 
 import '../utils/color.dart';
@@ -38,12 +40,21 @@ class _HomeScreenState extends State<HomeScreen> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
+
       if(scaffoldKey.currentState!.isDrawerOpen){
         scaffoldKey.currentState!.closeDrawer();
         //close drawer, if drawer is open
       }
+
+
     });
   }
+
+  List<Widget> _widgetOptions = <Widget>[
+    HomeScreen(),
+    RegisterScreen(),
+    LihatSemua(),
+  ];
 
   //Auth auth = new Auth();
 
@@ -53,7 +64,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: orangeLightColor,
-      //resizeToAvoidBottomInset: false,
       body: Container(
         decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -282,7 +292,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               InkWell(
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>LihatSemua()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreenNavBar()));
                 },
                 child: Text(
                   'Lihat semua',
@@ -329,7 +339,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     ),
-            bottomNavigationBar: Container(
+            /*bottomNavigationBar: Container(
               height: 50,
               decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
@@ -368,13 +378,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                     type: BottomNavigationBarType.shifting,
+
                     currentIndex: _selectedIndex,
                     iconSize: 20,
                     onTap: _onItemTapped,
                     elevation: 2
                 ),
               ),
-    ),
+    ),*/
 
         ////////////////////////////////////LAMA
         /*appBar: AppBar(

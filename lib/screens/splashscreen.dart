@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:monitoringdd/screens/home_screen.dart';
+import 'package:monitoringdd/screens/home_screen_navbar.dart';
 import 'package:monitoringdd/screens/login_screen.dart';
 import 'package:monitoringdd/utils/color.dart';
 import 'package:provider/provider.dart';
@@ -44,7 +45,8 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.push(
             context, MaterialPageRoute(builder: (contex) => LoginScreen()));
       }else{
-        Route route = MaterialPageRoute(builder: (context) => HomeScreen());
+        //Route route = MaterialPageRoute(builder: (context) => HomeScreen());
+        Route route = MaterialPageRoute(builder: (context) => HomeScreenNavBar());
         Navigator.pushReplacement(context, route);
       }
     });

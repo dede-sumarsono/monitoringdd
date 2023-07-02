@@ -79,7 +79,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               if(_formKey.currentState!.validate()){
                                 Provider.of<Auth>(context,listen: false)
                                     .login(creds: creds);
-                                Navigator.pop(context);
+                                //Navigator.pop(context);
+                                Route route = MaterialPageRoute(builder: (context) => HomeScreen());
+                                Navigator.pushReplacement(context, route);
                               }
 
                             },
