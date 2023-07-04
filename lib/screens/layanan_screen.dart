@@ -2,6 +2,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:monitoringdd/screens/login_screen.dart';
+import 'package:monitoringdd/sub_menu_user/layanan_detail.dart';
 import 'package:provider/provider.dart';
 
 import '../services/auth.dart';
@@ -18,7 +19,7 @@ class _LayananScreenState extends State<LayananScreen> {
   //final userdata = Provider.of<Auth>(context);
 
 
-  List _listLayanan = [
+  /*List _listLayanan = [
     ////peralihan Hak
     'Jual Beli',
     'Waris',
@@ -40,6 +41,28 @@ class _LayananScreenState extends State<LayananScreen> {
     'Pendirian PT',
     'Hibah Merk',
 
+  ];*/
+
+  final List<Map<String, dynamic>> _allLayanan = [
+    {"id": 0, "layanan": "Jual Beli",                     "waktu":"4 Bulan", "jenis_layanan": 'Peralihan Hak',"foto": "", "deskripsi":"Bisa disebut dengan PJB atau Pengikatan Jual Beli merupakan kesepakatan antara penjual untuk menjual properti miliknya kepada pembeli yang dibuat dengan akta notaris. PJB bisa dibuat karena alasan tertentu, seperti belum lunasnya pembayaran harga jual beli dan belum dibayarkannya pajak-pajak yang timbul karena jual beli"},
+    {"id": 1, "layanan": "Waris",                         "waktu":"2 Bulan", "jenis_layanan": 'Peralihan Hak',"foto": "", "deskripsi":"Notaris dalam pembagian warisan berperan dalam pembuatan Akta Pernyataan Waris dan Surat Keterangan Hak Waris. Apabila terjadi sengketa, Notaris dapat membuatkan akta-akta perdamaian dan/atau perjanjian pelepasan hak tuntutan"},
+    {"id": 2, "layanan": "Hibah",                         "waktu":"1 Bulan", "jenis_layanan": 'Peralihan Hak',"foto": "", "deskripsi":"Akta hibah adalah dokumen penting yang memiliki kekuatan hukum atas pemberian barang atau tanah kepada orang lain. Pada umumnya penerima surat hibah wasiat adalah orang pribadi yang masih dalam hubungan keluarga dengan pemberi hibah wasiat, atau orang pribadi yang tidak mampu"},
+    {"id": 3, "layanan": "Tukar Menukar",                 "waktu":"1 Bulan", "jenis_layanan": 'Peralihan Hak',"foto": "", "deskripsi":"Tukar menukar ini dapat diartikan sebagai suatu perjanjian yang dibuat antara pihak yang satu dengan pihak lainnya, dalam perjanjian itu pihak yang satu berkewajiban menyerahkan hak atas tanah yang ditukar, begitu pula pihak lainnya yang berhak menerima hak atas tanah yang ditukar"},
+    {"id": 4, "layanan": "Pemasukan ke dalam Perusahaan", "waktu":"5 Bulan", "jenis_layanan": 'Peralihan Hak',"foto": "", "deskripsi":"Pemasukan ke dalam perusahaan adalah jumlah uang atau nilai ekonomi lainnya yang diterima oleh perusahaan sebagai hasil dari aktivitas operasionalnya. Pemasukan ini bisa berasal dari beberapa sumber, termasuk penjualan produk atau jasa, pendapatan bunga, dividen, komisi, atau penghasilan dari investasi lainnya. Biasanya ini digunakan untuk menetapkan pendapatan perusahaan yang ada akan diberikan pada pihak mana"},
+    {"id": 5, "layanan": "Merger",                        "waktu":"2 Bulan", "jenis_layanan": 'Peralihan Hak',"foto": "", "deskripsi":"Dalam merger, terjadi penggabungan antara satu perseroan dengan perseroan lain yang menghilangkan status badan hukum perseroan-perseroan yang menggabungkan diri dan menghasilkan terbentuknya satu perseroan baru"},
+    {"id": 6, "layanan": "Penetapan Pengadilan",          "waktu":"2 Bulan", "jenis_layanan": 'Peralihan Hak',"foto": "", "deskripsi":"Dokumen ini di peruntukan sebagai penetapan dari keputusan sidang yang ingin anda ajukan setelah proses pengadilan selesai"},
+    {"id": 7, "layanan": "Lelang",                        "waktu":"1 Bulan", "jenis_layanan": 'Peralihan Hak',"foto": "", "deskripsi":"adalah berita acara pelaksanaan lelang yang dibuat oleh pejabat lelang yang merupakan akta otentik dan mempunyai kekuatan pembuktian sempurna. Kewenangan Notaris sebagai Pejabat Lelang Kelas II dalam Memberikan Penyuluhan Hukum atas akta risalah lelang yang dibuatnya"},
+    {"id": 8, "layanan": "Pembagian Hak",                 "waktu":"3 Bulan", "jenis_layanan": 'Peralihan Hak',"foto": "", "deskripsi":"Bisa disebut dengan APHB (Akta Pembagian Hak Bersama) adalah dokumen yang diperlukan untuk melepas atau mengubah hak bersama, menjadi hak individu atas tanah atau Hak Milik Atas Satuan Rumah Susun (HMRS). Dokumen ini biasanya dibutuhkan dalam pembagian harta warisan berupa tanah dan/atau bangunan, dengan ahli waris lebih dari satu orang"},
+
+    {"id": 9, "layanan": "Cessie",                        "waktu":"2 Minggu", "jenis_layanan": 'Hak Tanggungan',"foto": "", "deskripsi":"Cessie adalah suatu cara pemindahan piutang atas nama dimana piutang itu dijual oleh kreditur lama kepada orang yang nantinya menjadi kreditur baru, namun hubungan hukum utang piutang tersebut tidak hapus sedetikpun, tetapi dalam keseluruhannya dipindahkan kepada kreditur baru"},
+    {"id": 10, "layanan": "Subrogasi",                    "waktu":"3 Bulan",  "jenis_layanan": 'Hak Tanggungan',"foto": "", "deskripsi":"Subrogasi adalah Penggantian hak–hak oleh pihak ketiga yang membayar kepada Kreditur"},
+    {"id": 11, "layanan": "Roya",                         "waktu":"1 Minggu", "jenis_layanan": 'Hak Tanggungan',"foto": "", "deskripsi":"Roya adalah pencoretan pada buku tanah Hak Tanggungan karena hak tanggungan telah hapus. Hak Tanggungan dalam roya adalah hak jaminan atas tanah untuk pelunas utang tertentu, yang memberikan kedudukan diutamakan kepada kreditur tertentu terhadap kreditur-kreditur lain"},
+    {"id": 12, "layanan": "Merger HT",                    "waktu":"3 Bulan",  "jenis_layanan": 'Hak Tanggungan',"foto": "", "deskripsi":"merupakan kesepakatan antara kedua belah pihak untuk penyelesaian masalah Hak Tanggungan"},
+
+    {"id": 13, "layanan": "Akta Perjanjian Kawin",        "waktu":"2 Minggu", "jenis_layanan": 'Layanan Notaris',"foto": "", "deskripsi":"Bisa juga disebut dengan Perjanjian Pra Nikah adalah salah satu bentuk dari perjanjian yang dibuat antara satu pihak dengan pihak lainnya sebelum mengadakan upacara pernikahan untuk mengesahkan keduanya sebagai pasangan suami dan istri"},
+    {"id": 14, "layanan": "Pendirian CV",                 "waktu":"1 Bulan",  "jenis_layanan": 'Layanan Notaris',"foto": "", "deskripsi":"Akta pendirian CV atau akta notaris merupakan sebuah dokumen yang berfungsi sebagai bukti peristiwa. Dalam hal ini, akta pendirian CV akan menjadi bukti sah pendirian sebuah CV. Akta pendirian CV sendiri berisi seluruh informasi resmi yang berkaitan dengan profil usaha, tujuan, hingga kegiatan usaha"},
+    {"id": 15, "layanan": "Pendirian PT",                 "waktu":"2 Bulan",  "jenis_layanan": 'Layanan Notaris',"foto": "", "deskripsi":"Akta Pendirian PT atau Perseroan Terbatas adalah akta yang dibuat dihadapan Notaris, yang berisi keterangan mengenai kesepakatan dan identitas para pihak untuk mendirikan PT beserta Anggaran Dasarnya"},
+    {"id": 16, "layanan": "Hibah Merk",                   "waktu":"2 Bulan",  "jenis_layanan": 'Layanan Notaris',"foto": "", "deskripsi":"Pengalihan hak atas merek diatur di dalam Pasal 41 Undang- Undang Nomor 20 Tahun 2016, yang dalam hal ini hak atas merek terdaftar dapat beralih atau dialihkan karena hibah wasiat yang dalam hal ini setelah pengalihan hak atas merek terjadi, harus diikuti dengan penyerahan. Notaris akan menerbitkan Akta Hibah Merk"},
   ];
 
   @override
@@ -116,46 +139,6 @@ class _LayananScreenState extends State<LayananScreen> {
             Expanded(
               child: ListView(
                 children: [
-                                                // Row(
-                                                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                //   children: [
-                                                //     Text(
-                                                //       'Peralihan Hak',
-                                                //       style: TextStyle(
-                                                //         color: Colors.white,
-                                                //         fontWeight: FontWeight.bold,
-                                                //         fontSize: 20,
-                                                //       ),
-                                                //     ),
-                                                //   ],
-                                                // ),
-                                                //
-                                                // SizedBox(height: 15,),
-                                                //
-                                                // SingleChildScrollView(
-                                                //   scrollDirection: Axis.horizontal,
-                                                //   child: Row(
-                                                //     //mainAxisAlignment: MainAxisAlignment.start,
-                                                //     children: [
-                                                //       for (int i = 1 ; i<5; i++)
-                                                //         Padding(
-                                                //           padding: EdgeInsets.only(left: 10),
-                                                //           child: ClipRRect(
-                                                //             borderRadius: BorderRadius.circular(15),
-                                                //             child: Image.asset(
-                                                //               "assets/img/jualbeli.png",
-                                                //               //"assets/img/jualbeli$i.png",
-                                                //               height: 120,
-                                                //               fit: BoxFit.cover,
-                                                //             ),
-                                                //           ),
-                                                //         )
-                                                //     ],
-                                                //   ),
-                                                // ),
-
-                                            //SizedBox(height: 40,),
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -171,7 +154,7 @@ class _LayananScreenState extends State<LayananScreen> {
                   ),
 
                   SizedBox(height: 20,),
-                  HakTanggunganScroll(0,8,(){}),//untuk peralihan hak
+                  HakTanggunganScroll(0,9,(){}),//untuk peralihan hak
                   SizedBox(height: 40,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -188,7 +171,7 @@ class _LayananScreenState extends State<LayananScreen> {
                   ),
 
                   SizedBox(height: 20,),
-                  HakTanggunganScroll(9,12,(){}),
+                  HakTanggunganScroll(9,13,(){}),//Untuk Hak Tanggungan
                   SizedBox(height: 40,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -205,7 +188,7 @@ class _LayananScreenState extends State<LayananScreen> {
                   ),
 
                   SizedBox(height: 20,),
-                  HakTanggunganScroll(13,16,(){}),
+                  HakTanggunganScroll(13,17,(){}),//Layanan Notaris
 
 
                 ],
@@ -217,32 +200,24 @@ class _LayananScreenState extends State<LayananScreen> {
         ),
       )
 
-
-      /*Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.deepOrange, orangeLightColor],
-            end: Alignment.bottomCenter,
-            begin: Alignment.topCenter,
-          ),
-        ),
-
-      ),*/
-
     );
   }
 
 
 
   HakTanggunganScroll(jumlah1,jumlah2,onClick) {
-    jumlah2++;
+    //jumlah2++;
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
           for(int i=jumlah1; i<jumlah2; i++)
           InkWell(
-            onTap: (){},
+            onTap: (){
+              //print(_allLayanan[i]);
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>LayananDetail(idx: _allLayanan[i])));
+
+            },
             child: Container(
               width: 190,
               height: 300,
@@ -286,7 +261,7 @@ class _LayananScreenState extends State<LayananScreen> {
                       children: [
                         Text(
                           //"Perjanjian Pra Nikah"
-                          "${_listLayanan[i]}"
+                          '${_allLayanan[i]['layanan']}'
                         ,style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w500,
@@ -294,11 +269,9 @@ class _LayananScreenState extends State<LayananScreen> {
                           ),
                         ),
                         SizedBox(height: 5,),
-                        Text("  Hak Tanggungan",
+                        Text("  ${_allLayanan[i]['jenis_layanan']}",
                           style: TextStyle(
-                            //color: Colors.white.withOpacity(0.7),
                             color: Colors.white54,
-                            //fontSize: 16,
                             fontWeight: FontWeight.w500),
                           ),
                         SizedBox(height: 8,),

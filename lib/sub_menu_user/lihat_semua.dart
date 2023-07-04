@@ -124,18 +124,6 @@ class _LihatSemuaState extends State<LihatSemua> {
                   itemBuilder: (BuildContext context, int index) {
                     return Card(
                         child: ListTile(
-                          /*leading: ClipRRect(
-                              borderRadius: BorderRadius.circular(80),
-                              child:
-
-                              Image.asset('assets/img/notary.png')
-                            *//*Image.network(
-                                jsonList[index]['url'],
-                                fit: BoxFit.fill,
-                                width: 50,
-                                height: 50,
-                              ),*//*
-                          ),*/
                           title: Text(_foundData[index]['name']),
                           subtitle: Text('Jenis Layanan : Peralihan Hak'),
                           trailing: Container(
