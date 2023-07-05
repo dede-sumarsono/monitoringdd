@@ -83,10 +83,11 @@ class _LayananDetailState extends State<LayananDetail> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset('assets/img/ht2.jpg',
-                      //height: MediaQuery.of(context).size.height,
+                      //Image.asset('assets/img/ht2.jpg',
+                      Image.asset(idx['foto'],
+                      height: MediaQuery.of(context).size.height*0.45,
                       width: MediaQuery.of(context).size.width,
-                      fit: BoxFit.fill,
+                      fit: BoxFit.cover,
                       ),
                     ],
                   ),

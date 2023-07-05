@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:monitoringdd/admin_page/home_admin.dart';
 import 'package:monitoringdd/models/user.dart';
 import 'package:monitoringdd/screens/home_screen_navbar.dart';
 import 'package:monitoringdd/screens/login_screen.dart';
@@ -73,270 +74,275 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       padding: EdgeInsets.all(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Image.asset(
-                    'assets/img/notary.png',
-                    height: 40,
-                    width: 40,
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    'Hai ' + userdata.user!.username,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              ),
-              Icon(
-                Icons.notifications,
-                color: Colors.white,
-              )
-            ],
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Text(
-            'Ingin tahu',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 24,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 20,
             ),
-          ),
-          Text(
-            'Progress berkas anda ?',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 24,
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          /*Container(
-            decoration: BoxDecoration(
-              color: Color.fromRGBO(255, 255, 255, 100),
-            ),
-            child: TextField(
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search),
-                hintText: 'Search a flight',
-                border: OutlineInputBorder(),
-              ),
-            ),
-          ),*/
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-            Text(
-                'Berkas yang anda ajukan',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-              InkWell(
-                onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => LihatSemua()));},
-                child: Container(
-                  child: Text(
-                    'Lihat Semua >',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                    ),
-
-                  ),
-                ),
-              )],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            padding: EdgeInsets.all(20),
-            height: 140,
-            decoration: BoxDecoration(
-              //color: Color.fromRGBO(28, 94, 133, 100),
-              color: Colors.white54,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Column(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      'Proses Verifikasi',
-                      style: TextStyle(
-                          color: Colors.black87, fontWeight: FontWeight.bold),
+                    Image.asset(
+                      'assets/img/notary.png',
+                      height: 40,
+                      width: 40,
+                    ),
+                    SizedBox(
+                      width: 20,
                     ),
                     Text(
-                      'Pasca Real',
-                      style: TextStyle(
-                          color: Colors.black87, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      '0',
+                      'Hai ' + userdata.user!.username,
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text('.....'),
-                    Icon(
-                      Icons.alarm,
-                      color: Colors.white,
-                    ),
-                    Text('.....'),
-                    Text(
-                      '0',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      height: 20,
-                      width: 150,
-                      decoration: BoxDecoration(
-                        //color: Color.fromRGBO(173, 206, 225, 100),
-                        color: Color(0xffff4a00),
-                        //color: orangeColorSuperLight,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Dokumen - Notaris',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            //color: Color.fromRGBO(63, 126, 164, 100),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: 20,
-                      width: 150,
-                      decoration: BoxDecoration(
-                        color: Color(0xffff4a00),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Notaris - BPN',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                Icon(
+                  Icons.notifications,
+                  color: Colors.white,
                 )
               ],
             ),
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Pelayanan Notaris',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              'Ingin tahu',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 24,
+              ),
+            ),
+            Text(
+              'Progress berkas anda ?',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 24,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            /*Container(
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(255, 255, 255, 100),
+              ),
+              child: TextField(
+                decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.search),
+                  hintText: 'Search a flight',
+                  border: OutlineInputBorder(),
                 ),
               ),
-              InkWell(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreenNavBar()));
-                },
-                child: Text(
-                  'Lihat semua',
+            ),*/
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+              Text(
+                  'Berkas yang anda ajukan',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                InkWell(
+                  onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) => LihatSemua()));},
+                  child: Container(
+                    child: Text(
+                      'Lihat Semua >',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
+
+                    ),
+                  ),
+                )],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              padding: EdgeInsets.all(20),
+              height: 140,
+              decoration: BoxDecoration(
+                //color: Color.fromRGBO(28, 94, 133, 100),
+                color: Colors.white54,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Proses Verifikasi',
+                        style: TextStyle(
+                            color: Colors.black87, fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        'Pasca Real',
+                        style: TextStyle(
+                            color: Colors.black87, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '0',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text('.....'),
+                      Icon(
+                        Icons.alarm,
+                        color: Colors.white,
+                      ),
+                      Text('.....'),
+                      Text(
+                        '0',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        height: 20,
+                        width: 150,
+                        decoration: BoxDecoration(
+                          //color: Color.fromRGBO(173, 206, 225, 100),
+                          color: Color(0xffff4a00),
+                          //color: orangeColorSuperLight,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Dokumen - Notaris',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              //color: Color.fromRGBO(63, 126, 164, 100),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: 20,
+                        width: 150,
+                        decoration: BoxDecoration(
+                          color: Color(0xffff4a00),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'Notaris - BPN',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Pelayanan Notaris',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              layananNotaris(
-                img: 'paris.png',
-                city: 'Balik Nama',
-                country: 'Perlihan Hak',
-                onClick: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (contex) => RegisterScreen()));
-                },
-              ),
-              layananNotaris(
-                img: 'paris.png',
-                city: 'AJB',
-                country: 'Peralihan Hak',
-                onClick: null,
-              ),
-              layananNotaris(
-                img: 'paris.png',
-                city: 'Hak Tanggungan',
-                country: 'Peralihan Hak',
-                onClick: null,
-              ),
-            ],
-          ),
+                InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreenNavBar()));
+                  },
+                  child: Text(
+                    'Lihat semua',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                layananNotaris(
+                  img: 'paris.png',
+                  city: 'Balik Nama',
+                  country: 'Perlihan Hak',
+                  onClick: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (contex) => RegisterScreen()));
+                  },
+                ),
+                layananNotaris(
+                  img: 'paris.png',
+                  city: 'AJB',
+                  country: 'Peralihan Hak',
+                  onClick: null,
+                ),
+                layananNotaris(
+                  img: 'paris.png',
+                  city: 'Hak Tanggungan',
+                  country: 'Peralihan Hak',
+                  onClick: null,
+                ),
+              ],
+            ),
 
-
-        ],
+            ElevatedButton(onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeAdmin()));
+            }, child: Text('Admin'))
+          ],
+        ),
       ),
     ),
             /*bottomNavigationBar: Container(
