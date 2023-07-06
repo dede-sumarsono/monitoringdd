@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:monitoringdd/admin_page/pick_user.dart';
 import 'package:monitoringdd/admin_page/post_data_user.dart';
 
 import '../screens/register_screen.dart';
@@ -28,15 +29,16 @@ class _HomeAdminState extends State<HomeAdmin> {
             SizedBox(height: 10,),
 
             ElevatedButton(onPressed: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>PostDataUser()));
+              //Navigator.push(context, MaterialPageRoute(builder: (context)=>PostDataUser()));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>PickUser()));
             }, child: Text('Buat data user')),
 
             SizedBox(height: 10,),
 
-            ElevatedButton(onPressed: (){
+            /*ElevatedButton(onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context)=>PostDataUser()));
             }, child: Text('Rubah Status')),
-
+*/
             SizedBox(height: 10,)
 
 

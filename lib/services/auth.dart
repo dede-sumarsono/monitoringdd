@@ -124,6 +124,21 @@ class Auth extends ChangeNotifier{
     this.storage.write(key: 'token', value: token);
   }
 
+  void getalluser () async {
+    print(_token.toString());
+    print(_token.toString());
+    try{
+      Dio.Response response = await dio().get('/getalluser',options: Dio.Options(headers: {'Authorization' : 'Bearer $_token'}));
+      print(response.data.toString());
+
+
+    } catch(e){
+      print(e);
+    }
+    notifyListeners();
+
+  }
+
 
 
 }

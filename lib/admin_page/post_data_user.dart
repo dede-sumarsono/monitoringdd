@@ -2,6 +2,8 @@
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:monitoringdd/screens/login_screen.dart';
+import 'package:monitoringdd/screens/register_screen.dart';
 import 'package:monitoringdd/widgets/btn_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -10,20 +12,29 @@ import '../utils/color.dart';
 import '../widgets/header_container.dart';
 
 class PostDataUser extends StatefulWidget {
-  const PostDataUser({Key? key}) : super(key: key);
+  PostDataUser({Key? key,required this.idx}) : super(key: key);
+
+  Map idx;
 
   @override
-  State<PostDataUser> createState() => _PostDataUserState();
+  State<PostDataUser> createState() => _PostDataUserState(this.idx);
 }
 
 class _PostDataUserState extends State<PostDataUser> {
+  late Map idx;
+
+  _PostDataUserState(this.idx);
 
   TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _usernameController = TextEditingController();
-  TextEditingController _nomorController = TextEditingController();
+  TextEditingController _jenislayanan = TextEditingController();
+  TextEditingController _jenispesanan = TextEditingController();
+  TextEditingController _keterangan = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+
+  bool dp = false;
+  String? selectedValue;
+  String? selectedValue2;
 
 
   @override
@@ -41,32 +52,58 @@ class _PostDataUserState extends State<PostDataUser> {
                     child: Container(
                         margin: EdgeInsets.only(left: 20,right: 20,top: 30),
                         child: Column(
-                          mainAxisSize: MainAxisSize.max,
                           children:<Widget>[
-                            _textInput(hint: "Nama User",icon: Icons.email,controller: _emailController,validVar: 'Tolong isi email yang sesuai'),
-                            _textInput(hint: "Username",icon: Icons.person,controller: _usernameController,validVar: 'Tolong isi username yang sesuai'),
-                            _textInput(hint: "Jenis Layanan",icon: Icons.vpn_key,controller: _passwordController,validVar: 'Tolong isi password yang sesuai'),
-                            _textInput(hint: "Jenis Pesanan",icon: Icons.call,controller: _nomorController,validVar: 'Tolong isi nomor telepon yang sesuai'),
-                            _textInput(hint: "Keterangan",icon: Icons.call,controller: _nomorController,validVar: 'Tolong isi nomor telepon yang sesuai'),
+                            textConst('${idx['username']}'),
+                            //_textInput(hint: "Nama User",icon: Icons.email,controller: _emailController,validVar: 'Tolong isi email yang sesuai'),
+                            //_textInput(hint: "Username",icon: Icons.person,controller: _usernameController,validVar: 'Tolong isi username yang sesuai'),
+                            _textInput(hint: "Jenis Layanan",icon: Icons.vpn_key,controller: _jenislayanan,validVar: 'Jenis Layanan yang sesuai'),
+                            _textInput(hint: "Jenis Pesanan",icon: Icons.call,controller: _jenispesanan,validVar: 'Tolong isi nomor telepon yang sesuai'),
+                            _textInput(hint: "Keterangan",icon: Icons.call,controller: _keterangan,validVar: 'Tolong isi nomor telepon yang sesuai'),
+                            DropdownButton<String?>(
+                              value: selectedValue,
+                                items: ["Peralihan Hak","Hak Tanggungan","Layanan Notaris"]
+                                    .map<DropdownMenuItem<String?>>((e) => DropdownMenuItem(child: Text(e.toString()),value: e,)).toList() ,
+                                onChanged: (value){
+                                 setState(() {
+                                   selectedValue = value;
+                                   print(selectedValue);
+                                   dp = true;
+                                 });
+                                }),
+                            DropdownButton<String?>(
+                                value: selectedValue2,
+                                items: ["1","2","3"]
+                                    .map<DropdownMenuItem<String?>>((e) => DropdownMenuItem(child: Text(e.toString()),value: e,)).toList() ,
+                                onChanged: (value){
+                                  setState(() {
+                                    selectedValue2 = value;
+                                    print(selectedValue2);
+                                  });
+                                }),
 
 
                             Expanded(
                               child: Center(
                                 child: ButtonWidget(
-                                  btnText: 'Registrasi',
+                                  btnText: 'Daftarkan',
                                   onClick: (){
                                     Map creds = {
-                                      'email' : _emailController.text,
+                                      /*'email' : _emailController.text,
                                       'password' : _passwordController.text,
                                       'username' : _usernameController.text,
-                                      'notelepon' : _nomorController.text
+                                      'notelepon' : _nomorController.text*/
+                                      "id_untuk_user": idx['id'],
+                                      "jenis_layanan": _jenislayanan.text,
+                                      "jenis_pesanan":_jenispesanan.text,
+                                      "keterangan": _keterangan.text
 
                                     };
 
                                     if(_formKey.currentState!.validate()){
-                                      Provider.of<Auth>(context,listen: false)
+                                      /*Provider.of<Auth>(context,listen: false)
                                           .register(creds: creds);
-                                      Navigator.pop(context);
+                                      Navigator.pop(context);*/
+                                      print(creds);
                                     }
 
 
@@ -83,14 +120,14 @@ class _PostDataUserState extends State<PostDataUser> {
                                     children:
                                     [
                                       TextSpan(
-                                          text: "Ingin Login ? ",
+                                          text: "Akun User belum terdaftar ? ",
                                           style: TextStyle(color: Colors.black)
                                       ),
                                       TextSpan(
-                                          text: " Sudah punya akun",
+                                          text: " Daftarkan akun suer",
                                           style: TextStyle(color: orangeColor),
                                           recognizer: TapGestureRecognizer()..onTap = () {
-                                            Navigator.pop(context);
+                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>RegisterScreen()));
                                           }
                                       ),
                                     ]
@@ -100,39 +137,6 @@ class _PostDataUserState extends State<PostDataUser> {
 
 
 
-
-
-                            /*Flexible(
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: 50,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                shape:RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(20)),
-                                ),
-                                padding: EdgeInsets.symmetric(vertical: 10)
-                              ),
-                              child: Text("Log in"),
-                              onPressed: (){
-
-                                Map creds = {
-                                  'email' : _emailController.text,
-                                  'password' : _passwordController.text,
-
-                                };
-
-                                if(_formKey.currentState!.validate()){
-                                  Provider.of<Auth>(context,listen: false)
-                                      .login(creds: creds);
-                                  Navigator.pop(context);
-                                }
-                              },
-
-                            ),
-                          ),
-                        )*/
 
 
 
@@ -158,30 +162,62 @@ class _PostDataUserState extends State<PostDataUser> {
     );
   }
 
-
-  ////////////////
-  Widget _textInput({controller, hint, icon,validVar}){
+  Widget textConst(nama) {
+    //return Text("Nama User : $nama");
     return Container(
-      margin: EdgeInsets.only(top: 10),
+      margin: EdgeInsets.only(left: 10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
       padding: EdgeInsets.only(left: 10),
-      child: TextFormField(
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          //hintText: "Email",
-          hintText: hint,
-          //prefixIcon: Icon(Icons.email),
-          prefixIcon: Icon(icon),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text("Nama User",
+            style: TextStyle(color: Colors.black87,fontSize: 16),
+          ),
+          SizedBox(width: 10,),
+          Text(" : ",
+            style: TextStyle(color: Colors.black87,fontSize: 16),
+          ),
+          SizedBox(width: 10,),
+          Text("$nama",
+            style: TextStyle(color: Colors.black87,fontSize: 16),
+          ),
 
-        ),
-        //controller: _emailController,
-        controller: controller,
-        //validator: (value) => value!.isEmpty ? 'Tolong isi email yang sesuai' : null,
-        validator: (value) => value!.isEmpty ? validVar : null,
+        ],
       ),
     );
+
+
   }
-}
+
+
+    ////////////////
+    Widget _textInput({controller, hint, icon,validVar}){
+      return Container(
+        margin: EdgeInsets.only(top: 10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(20)),
+        ),
+        padding: EdgeInsets.only(left: 10),
+        child: TextFormField(
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            //hintText: "Email",
+            hintText: hint,
+            //prefixIcon: Icon(Icons.email),
+            prefixIcon: Icon(icon),
+
+          ),
+          //controller: _emailController,
+          controller: controller,
+          //validator: (value) => value!.isEmpty ? 'Tolong isi email yang sesuai' : null,
+          validator: (value) => value!.isEmpty ? validVar : null,
+        ),
+      );
+    }
+  }
+
