@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:monitoringdd/admin_page/post_data_user.dart';
+import 'package:monitoringdd/admin_page/post_data_user2.dart';
 import 'package:monitoringdd/sub_menu_user/lihat_semua_detail.dart';
 import 'package:provider/provider.dart';
 
@@ -198,7 +199,8 @@ class _PickUserState extends State<PickUser> {
                           onTap: (){
 
                             Navigator.of(context)
-                                .push(MaterialPageRoute(builder: (context)=>PostDataUser(idx: _foundData[index]),));
+                                //.push(MaterialPageRoute(builder: (context)=>PostDataUser(idx: _foundData[index]),));
+                                .push(MaterialPageRoute(builder: (context)=>PostDataUser2(idx: _foundData[index]),));
 
                             Fluttertoast.showToast(
                                 msg: '$index',
