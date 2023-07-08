@@ -13,9 +13,11 @@ class Auth extends ChangeNotifier{
   bool _isLoggedIn = false;
   late User? _user;
   late String? _token;
+  late int _id;
 
   bool get authenticated => _isLoggedIn;
   User? get user => _user;
+  int get id => _id;
 
   final storage = new FlutterSecureStorage();
 
@@ -67,6 +69,16 @@ class Auth extends ChangeNotifier{
 
       _isLoggedIn = true;
     } catch(e){
+      String toast = 'Login Gagal';
+      Fluttertoast.showToast(
+          msg: toast,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
       print(e);
 
     }
@@ -93,6 +105,7 @@ class Auth extends ChangeNotifier{
     this._user = null;
     this._isLoggedIn = false;
     this._token = null;
+    //this._id =  null;
     await storage.delete(key: 'token');
   }
 
@@ -106,11 +119,13 @@ class Auth extends ChangeNotifier{
         this._isLoggedIn = true;
         this._user = User.fromJson(response.data);
         this._token = token;
+        this._id = response.data['id'];
         this.storeToken(token: token);
 
 
         notifyListeners();
         print(_user);
+        //print(_id);
       }
       catch(e){
         print(e);
@@ -118,6 +133,7 @@ class Auth extends ChangeNotifier{
 
     }
   }
+
 
   void storeToken({required String token}) async {
 
@@ -130,6 +146,88 @@ class Auth extends ChangeNotifier{
     try{
       Dio.Response response = await dio().get('/getalluser',options: Dio.Options(headers: {'Authorization' : 'Bearer $_token'}));
       print(response.data.toString());
+
+
+    } catch(e){
+      print(e);
+    }
+    notifyListeners();
+
+  }
+
+  void postDataUser ({required Map creds}) async {
+    try{
+      Dio.Response response = await dio().post('/post',data: creds,options: Dio.Options(headers: {'Authorization' : 'Bearer $_token'}));
+      print(response.data.toString());
+
+      String toast = 'Data Sudah berhasil ditambahkan';
+      Fluttertoast.showToast(
+          msg: toast,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+
+
+    } catch(e){
+      String toast = 'Data tidak berhasil ditambahkan';
+      Fluttertoast.showToast(
+          msg: toast,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+      print(e);
+    }
+    notifyListeners();
+
+  }
+
+  void userToAdmin ({required int id}) async {
+    try{
+      Dio.Response response = await dio().post('/updatelevel/$id',options: Dio.Options(headers: {'Authorization' : 'Bearer $_token'}));
+      print(response.data.toString());
+
+      String toast = response.data['data'].toString();
+      Fluttertoast.showToast(
+          msg: toast,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+
+
+    } catch(e){
+      print(e);
+    }
+    notifyListeners();
+
+  }
+
+  void deleteUser ({required int id}) async {
+    try{
+      Dio.Response response = await dio().post('/deleteuser/$id',options: Dio.Options(headers: {'Authorization' : 'Bearer $_token'}));
+      print(response.data.toString());
+
+      String toast = response.data['data'].toString();
+      Fluttertoast.showToast(
+          msg: toast,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
 
 
     } catch(e){

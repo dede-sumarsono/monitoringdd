@@ -183,13 +183,14 @@ class _PickUserState extends State<PickUser> {
                     return Card(
                         child: ListTile(
                           title: Text(_foundData[index]['username']),
-                          subtitle: Text('Jenis Layanan : Peralihan Hak'),
+                          subtitle: Text(_foundData[index]['notelepon']),
                           trailing: Container(
                             width: 75,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text('2023-04-05'),
+                                //Text('2023-04-05'),
+                                Text(_foundData[index]['created_at'].substring(0,10)),
                                 //Icon(Icons.arrow_right_outlined),
 
                               ],

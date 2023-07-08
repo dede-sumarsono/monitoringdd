@@ -14,14 +14,21 @@ import 'package:provider/provider.dart';
 import '../services/auth.dart';
 import '../widgets/header_container.dart';
 
-class ProfileScreen extends StatefulWidget {
-  ProfileScreen({Key? key}) : super(key: key);
+class RubahLevelUser2 extends StatefulWidget {
+  RubahLevelUser2({Key? key, required this.idx}) : super(key: key);
+
+  Map idx;
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  State<RubahLevelUser2> createState() => _RubahLevelUser2State(this.idx);
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _RubahLevelUser2State extends State<RubahLevelUser2> {
+
+  late Map idx;
+
+
+  _RubahLevelUser2State(this.idx);
 
 
 
@@ -45,25 +52,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final userdata = Provider.of<Auth>(context);
     return Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: MediaQuery.of(context).size.height * 0.4,
-                child: Stack(
-                  children: [
-                    //Widget greenIntroWidgetWithoutLogos(),
-                    greenIntroWidgetWithoutLogos(),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: InkWell(
-                        onTap: () {
-                          getImage(ImageSource.camera);
-                        },
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height * 0.4,
+              child: Stack(
+                children: [
+                  //Widget greenIntroWidgetWithoutLogos(),
+                  greenIntroWidgetWithoutLogos(),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: InkWell(
+                      onTap: () {
+                        getImage(ImageSource.camera);
+                      },
                         child: selectedImage == null
                             ? Container(
                           width: 120,
@@ -91,103 +97,103 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               shape: BoxShape.circle,
                               color: Color(0xffD6D6D6)),
                         ),
-                      ),
-                    )
+                    ),
+                  )
+                ],
+              ),
+            ),
+
+            SizedBox(height: 20,),
+
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 23),
+              child: Form(
+                key: formKey,
+                child: Column(
+
+                  children: [
+                    TextFieldWidget(
+                        'Username',idx['username'], Icons.person_outlined),
+
+                    SizedBox(
+                      height: 10,
+                    ),
+
+                    TextFieldWidget(
+                        'E-mail',idx['email'], Icons.mail_outline),
+
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    //TextFieldWidget('No.Telepon',idx['notelepon'], Icons.card_travel),
+                    TextFieldWidget('No.Telepon',idx['notelepon'], Icons.call),
+                    const SizedBox(
+                      height: 10,
+                    ),
+
+                    TextFieldWidget('Dibuat pada',idx['created_at'].substring(0,10),
+                        Icons.watch_later_outlined),
+
+                    const SizedBox(
+                      height: 30,
+                    ),
+
+
+
+                    ButtonWidget(btnText: 'Rubah User jadi Admin',onClick: () {
+                      AwesomeDialog(
+                        context: context,
+                        dialogType: DialogType.question,
+                        animType: AnimType.topSlide,
+                        showCloseIcon: true,
+                        title: "Peringatan",
+                        desc: "Apakah anda yakin akan mengupdate user ${idx['username']} menjadi Admin? ",
+                        btnCancelOnPress: (){},
+                        btnOkOnPress: (){
+                          Provider.of<Auth>(context,listen: false)
+                              .userToAdmin(id: idx['id']);
+                        },
+                      ).show();
+
+                    },),
+
+                    const SizedBox(
+                      height: 30,
+                    ),
+
+                    ButtonWidget(btnText: 'Hapus User',onClick: () {
+                      print('Button hapus clicked');
+                      AwesomeDialog(
+                        context: context,
+                        dialogType: DialogType.warning,
+                        animType: AnimType.topSlide,
+                        showCloseIcon: true,
+                        title: "Peringatan",
+                        desc: "Akun ini akan dihapus",
+                        btnCancelOnPress: (){},
+                        btnOkOnPress: (){
+                          Provider.of<Auth>(context,listen: false)
+                              .deleteUser(id: idx['id']);
+                        },
+                      ).show();
+
+
+
+
+                    },),
+
+                    SizedBox(height: 30,)
+
+
+
+
+
                   ],
-                ),
+
               ),
 
-              SizedBox(height: 20,),
-
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 23),
-                child: Form(
-                  key: formKey,
-                  child: Column(
-
-                    children: [
-                      TextFieldWidget(
-                          'Username',userdata.user!.username, Icons.person_outlined),
-
-                      SizedBox(
-                        height: 10,
-                      ),
-
-                      TextFieldWidget(
-                          'E-mail',userdata.user!.email, Icons.mail_outline),
-
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      //TextFieldWidget('No.Telepon',idx['notelepon'], Icons.card_travel),
-                      TextFieldWidget('No.Telepon',userdata.user!.notelepon, Icons.call),
-                      const SizedBox(
-                        height: 10,
-                      ),
-
-                      TextFieldWidget('Dibuat pada',userdata.user!.created_at.substring(0,10),
-                          Icons.watch_later_outlined),
-
-                      const SizedBox(
-                        height: 30,
-                      ),
-
-
-
-                      /*ButtonWidget(btnText: 'Rubah User jadi Admin',onClick: () {
-                        AwesomeDialog(
-                          context: context,
-                          dialogType: DialogType.question,
-                          animType: AnimType.topSlide,
-                          showCloseIcon: true,
-                          title: "Peringatan",
-                          desc: "Apakah anda yakin akan mengupdate user ${idx['username']} menjadi Admin? ",
-                          btnCancelOnPress: (){},
-                          btnOkOnPress: (){
-                            Provider.of<Auth>(context,listen: false)
-                                .userToAdmin(id: idx['id']);
-                          },
-                        ).show();
-
-                      },),*/
-
-                      const SizedBox(
-                        height: 30,
-                      ),
-
-                      /*ButtonWidget(btnText: 'Hapus User',onClick: () {
-                        print('Button hapus clicked');
-                        AwesomeDialog(
-                          context: context,
-                          dialogType: DialogType.warning,
-                          animType: AnimType.topSlide,
-                          showCloseIcon: true,
-                          title: "Peringatan",
-                          desc: "Akun ini akan dihapus",
-                          btnCancelOnPress: (){},
-                          btnOkOnPress: (){
-                            Provider.of<Auth>(context,listen: false)
-                                .userToAdmin(id: idx['id']);
-                          },
-                        ).show(); },),*/
-
-
-
-
-
-
-                      SizedBox(height: 30,)
-
-
-
-
-
-                    ],
-
-                  ),
-
-                ),
               ),
+            ),
 
 
 
@@ -195,9 +201,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
 
 
-            ],
-          ),
-        )
+          ],
+        ),
+      )
 
     );
 
@@ -257,7 +263,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                  //color: Colors.black.withOpacity(0.05),
+                    //color: Colors.black.withOpacity(0.05),
                     color: Colors.black.withOpacity(0.25),
                     spreadRadius: 1,
                     blurRadius: 1)

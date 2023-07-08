@@ -197,7 +197,7 @@ class _PostDataUser2State extends State<PostDataUser2> {
             InkWell(
               onTap: (){
                 //print(_allLayanan[i]);
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>PostDataUser(idx: _allLayanan[i],username:idx['username'])));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>PostDataUser(idx: _allLayanan[i],username:idx['username'],iduser:idx['id'])));
 
               },
               child: Container(

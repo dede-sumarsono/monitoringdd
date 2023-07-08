@@ -10,20 +10,22 @@ import '../utils/color.dart';
 import '../widgets/header_container.dart';
 
 class PostDataUser extends StatefulWidget {
-  PostDataUser({Key? key, required this.idx,required this.username}) : super(key: key);
+  PostDataUser({Key? key, required this.idx,required this.username, required this.iduser}) : super(key: key);
 
   Map idx;
   String username;
+  int iduser;
 
   @override
-  State<PostDataUser> createState() => _PostDataUserState(this.idx, this.username);
+  State<PostDataUser> createState() => _PostDataUserState(this.idx, this.username,this.iduser);
 }
 
 class _PostDataUserState extends State<PostDataUser> {
   late Map idx;
   late String username;
+  late int iduser;
 
-  _PostDataUserState(this.idx,this.username);
+  _PostDataUserState(this.idx,this.username,this.iduser);
 
   TextEditingController _emailController = TextEditingController();
   TextEditingController _jenislayanan = TextEditingController();
@@ -38,10 +40,7 @@ class _PostDataUserState extends State<PostDataUser> {
 
   @override
   Widget build(BuildContext context) {
-    final Function() notifyParent;
-    refresh() {
-      setState(() {});
-    }
+
 
     return Scaffold(
         body: Container(
@@ -57,14 +56,12 @@ class _PostDataUserState extends State<PostDataUser> {
                     margin: EdgeInsets.only(left: 20, right: 20, top: 30),
                     child: ListView(
                       children: <Widget>[
-                        textConst('${idx['layanan']}'),
-                        textConst('${idx['jenis_layanan']}'),
-                        textConst('$username'),
-                        //_textInput(hint: "Nama User",icon: Icons.email,controller: _emailController,validVar: 'Tolong isi email yang sesuai'),
-                        //_textInput(hint: "Username",icon: Icons.person,controller: _usernameController,validVar: 'Tolong isi username yang sesuai'),
-                        //_textInput(hint: "Jenis Layanan",icon: Icons.vpn_key,controller: _jenislayanan,validVar: 'Jenis Layanan yang sesuai'),
-                        //_textInput(hint: "Jenis Pesanan",icon: Icons.call,controller: _jenispesanan,validVar: 'Tolong isi nomor telepon yang sesuai'),
-                        //_textInput(hint: "Keterangan",icon: Icons.call, controller: _keterangan, validVar: 'Tolong isi nomor telepon yang sesuai'),
+                        textConst('$username',Icons.person,'Nama User'),
+                        SizedBox(height: 5,),
+                        textConst('${idx['jenis_layanan']}',Icons.work_history,'Jenis Layanan'),
+                        SizedBox(height: 5,),
+                        textConst('${idx['layanan']}',Icons.work,'Jenis Pesanan'),
+                        _textInput(hint: "Keterangan",icon: Icons.description, controller: _keterangan, validVar: 'Tolong isi nomor keterangan yang sesuai'),
 
 
                   SizedBox(
@@ -279,16 +276,16 @@ class _PostDataUserState extends State<PostDataUser> {
                                       'password' : _passwordController.text,
                                       'username' : _usernameController.text,
                                       'notelepon' : _nomorController.text*/
-                                  "id_untuk_user": idx['id'],
-                                  "jenis_layanan": selectedValue,
-                                  "jenis_pesanan": selectedValue2,
+                                  "id_untuk_user": iduser,
+                                  "jenis_layanan": idx['layanan'],
+                                  "jenis_pesanan": idx['jenis_layanan'],
                                   "keterangan": _keterangan.text
                                 };
 
                                 if (_formKey.currentState!.validate()) {
-                                  /*Provider.of<Auth>(context,listen: false)
-                                          .register(creds: creds);
-                                      Navigator.pop(context);*/
+                                  Provider.of<Auth>(context,listen: false)
+                                          .postDataUser(creds: creds);
+                                      Navigator.pop(context);
                                   print(creds);
                                 }
                               },
@@ -322,7 +319,7 @@ class _PostDataUserState extends State<PostDataUser> {
     ));
   }
 
-  Widget textConst(nama) {
+  Widget textConst(nama,icon,des) {
     //return Text("Nama User : $nama");
     return Container(
       margin: EdgeInsets.only(left: 3),
@@ -334,10 +331,10 @@ class _PostDataUserState extends State<PostDataUser> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Icon(Icons.person,color: orangeColor,),
+          Icon(icon,color: orangeColor,),
           SizedBox(width: 5,),
           Text(
-            " Nama User",
+            " $des",
             //style: TextStyle(color: Colors.black87, fontSize: 16),
               style: TextStyle(
                   color: orangeColor,
@@ -358,13 +355,17 @@ class _PostDataUserState extends State<PostDataUser> {
           SizedBox(
             width: 10,
           ),
-          Text(
-            "$nama",
-            //style: TextStyle(color: Colors.black87, fontSize: 16),
-              style: TextStyle(
-                  color: orangeColor,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20)
+          Expanded(
+            child: Text(
+              "$nama",
+              //style: TextStyle(color: Colors.black87, fontSize: 16),
+                style: TextStyle(
+                    color: orangeColor,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                ),
+              maxLines: 3,
+            ),
           ),
         ],
       ),
@@ -381,12 +382,14 @@ class _PostDataUserState extends State<PostDataUser> {
       ),
       padding: EdgeInsets.only(left: 10),
       child: TextFormField(
+        style: TextStyle(color: orangeColor),
         decoration: InputDecoration(
+
           border: InputBorder.none,
           //hintText: "Email",
           hintText: hint,
           //prefixIcon: Icon(Icons.email),
-          prefixIcon: Icon(icon),
+          prefixIcon: Icon(icon,color: orangeColor,),
         ),
         //controller: _emailController,
         controller: controller,

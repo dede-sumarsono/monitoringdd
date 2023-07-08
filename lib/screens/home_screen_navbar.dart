@@ -1,15 +1,9 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:monitoringdd/models/user.dart';
 import 'package:monitoringdd/screens/home_screen.dart';
 import 'package:monitoringdd/screens/layanan_screen.dart';
-import 'package:monitoringdd/screens/login_screen.dart';
 import 'package:monitoringdd/screens/profile_screen.dart';
-import 'package:monitoringdd/screens/register_screen.dart';
 import 'package:monitoringdd/services/auth.dart';
-import 'package:monitoringdd/sub_menu_user/lihat_semua.dart';
-import 'package:monitoringdd/sub_menu_user/lihat_semua_detail.dart';
 import 'package:provider/provider.dart';
 
 import '../utils/color.dart';
@@ -42,13 +36,6 @@ class _HomeScreenNavBarState extends State<HomeScreenNavBar> {
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-
-      if(scaffoldKey.currentState!.isDrawerOpen){
-        scaffoldKey.currentState!.closeDrawer();
-        //close drawer, if drawer is open
-      }
-
-
     });
   }
 
@@ -58,14 +45,12 @@ class _HomeScreenNavBarState extends State<HomeScreenNavBar> {
     LayananScreen(),
   ];
 
-  //Auth auth = new Auth();
 
   @override
   Widget build(BuildContext context) {
-    final userdata = Provider.of<Auth>(context);
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: orangeLightColor,
+      backgroundColor: _selectedIndex == 0? Colors.white:orangeLightColor,
       body: _widgetOptions.elementAt(_selectedIndex),
 
       bottomNavigationBar: Container(

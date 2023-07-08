@@ -206,7 +206,6 @@ class _LayananScreenState extends State<LayananScreen> {
 
 
   HakTanggunganScroll(jumlah1,jumlah2,onClick) {
-    //jumlah2++;
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
