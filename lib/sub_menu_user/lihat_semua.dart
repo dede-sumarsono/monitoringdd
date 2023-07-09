@@ -176,6 +176,7 @@ class _LihatSemuaState extends State<LihatSemua> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(_foundData[index]['created_at'].substring(0,10)),
+                                //Text(_foundData[index]['status'])
                                 //Icon(Icons.arrow_right_outlined),
 
                               ],

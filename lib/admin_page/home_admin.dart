@@ -40,7 +40,13 @@ class _HomeAdminState extends State<HomeAdmin> {
               Navigator.push(context, MaterialPageRoute(builder: (context)=>RubahLevelUser1()));
             }, child: Text('Rubah Status')),
 
-            SizedBox(height: 10,)
+            SizedBox(height: 10,),
+
+            ElevatedButton(onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>RubahLevelUser1()));
+            }, child: Text('Rubah Status Post')),
+
+            SizedBox(height: 10,),
 
 
           ],

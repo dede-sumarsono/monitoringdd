@@ -237,6 +237,58 @@ class Auth extends ChangeNotifier{
 
   }
 
+  Future getId({String? token}) async {
+    if(token == null){
+      return;
+    }else{
+      try{
+        /*Dio.Response response = await dio().get('/me',
+            options: Dio.Options(headers: {'Authorization' : 'Bearer $token'}));*/
+
+        Dio.Response response = await dio().get('/getuserordercount/$id',
+            options: Dio.Options(headers: {'Authorization' : 'Bearer $token'}));
+
+        var hasilid = response.data['data'];
+        print(hasilid);
+
+        return hasilid;
+
+
+        notifyListeners();
+      }
+      catch(e){
+        print(e);
+      }
+
+    }
+  }
+
+  Future getId2({String? token}) async {
+    if(token == null){
+      return;
+    }else{
+      try{
+        /*Dio.Response response = await dio().get('/me',
+            options: Dio.Options(headers: {'Authorization' : 'Bearer $token'}));*/
+
+        Dio.Response response = await dio().get('/getuserordercount2/$id',
+            options: Dio.Options(headers: {'Authorization' : 'Bearer $token'}));
+
+        var hasilid = response.data['data'];
+        print(hasilid);
+
+        return hasilid;
+
+
+        notifyListeners();
+      }
+      catch(e){
+        print(e);
+      }
+
+    }
+  }
+
 
 
 }

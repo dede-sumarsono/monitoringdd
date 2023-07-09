@@ -1,16 +1,15 @@
-import 'package:flutter/gestures.dart';
+import 'package:dio/dio.dart' as Dio;
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:monitoringdd/admin_page/home_admin.dart';
-import 'package:monitoringdd/models/user.dart';
-import 'package:monitoringdd/screens/home_screen_navbar.dart';
+import 'package:monitoringdd/screens/layanan_screen.dart';
 import 'package:monitoringdd/screens/login_screen.dart';
-import 'package:monitoringdd/screens/register_screen.dart';
 import 'package:monitoringdd/services/auth.dart';
 import 'package:monitoringdd/sub_menu_user/lihat_semua.dart';
-import 'package:monitoringdd/sub_menu_user/lihat_semua_detail.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../services/dio.dart';
 import '../sub_menu_user/layanan_detail.dart';
 import '../utils/color.dart';
 
@@ -24,6 +23,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final storage = new FlutterSecureStorage();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
 
   final List<Map<String, dynamic>> _allLayanan = [
     {"id": 0, "layanan": "Jual Beli",                     "waktu":"4 Bulan", "jenis_layanan": 'Peralihan Hak',"foto": "assets/img/jualbeli2.jpg", "deskripsi":"Bisa disebut dengan PJB atau Pengikatan Jual Beli merupakan kesepakatan antara penjual untuk menjual properti miliknya kepada pembeli yang dibuat dengan akta notaris. PJB bisa dibuat karena alasan tertentu, seperti belum lunasnya pembayaran harga jual beli dan belum dibayarkannya pajak-pajak yang timbul karena jual beli"},
@@ -47,9 +47,19 @@ class _HomeScreenState extends State<HomeScreen> {
     {"id": 16, "layanan": "Hibah Merk",                   "waktu":"2 Bulan",  "jenis_layanan": 'Layanan Notaris',"foto": "assets/img/hibahmerk.jpg", "deskripsi":"Pengalihan hak atas merek diatur di dalam Pasal 41 Undang- Undang Nomor 20 Tahun 2016, yang dalam hal ini hak atas merek terdaftar dapat beralih atau dialihkan karena hibah wasiat yang dalam hal ini setelah pengalihan hak atas merek terjadi, harus diikuti dengan penyerahan. Notaris akan menerbitkan Akta Hibah Merk"},
   ];
 
+    final String urlMaps = 'https://goo.gl/maps/vz2HzvAmwd1PtNF79';
+
+  String? encodeQueryParameters(Map<String, String> params) {
+    return params.entries
+        .map((MapEntry<String, String> e) =>
+    '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+        .join('&');
+  }
+
   @override
   void initState() {
     readToken();
+    readScore();
     super.initState();
   }
 
@@ -58,27 +68,36 @@ class _HomeScreenState extends State<HomeScreen> {
     Provider.of<Auth>(context, listen: false).getToken(token: token);
     print(token);
   }
+  var score;
+  var score2;
 
-  int _selectedIndex = 0;
+  void readScore() async {
+    //print('user id adalah $id');
+    String? token = await storage.read(key: 'token');
+    final hasil = await Provider.of<Auth>(context, listen: false).getId(token: token);
+    final hasil2 = await Provider.of<Auth>(context, listen: false).getId2(token: token);
+    print('jadi hasilnya adalah $hasil');
+    print('jadi hasilnya adalah $hasil2');
 
-  void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
-
-      if(scaffoldKey.currentState!.isDrawerOpen){
-        scaffoldKey.currentState!.closeDrawer();
-        //close drawer, if drawer is open
-      }
-
-
+      score = hasil;
+      score2 = hasil2;
     });
+
   }
 
-  //Auth auth = new Auth();
+
+
+
 
   @override
   Widget build(BuildContext context) {
     final userdata = Provider.of<Auth>(context);
+
+    //var prosesVerifikasi = readScore(userdata.user!.id);
+    //print('ini hasilnya $score');
+
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: orangeLightColor,
@@ -228,7 +247,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '0',
+                        '$score',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 30,
@@ -242,7 +261,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Text('.....'),
                       Text(
-                        '0',
+                        //'0',
+                        '$score2',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 30,
@@ -315,7 +335,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreenNavBar()));
+                    //Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeScreenNavBar()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>LayananScreen()));
                   },
                   child: Text(
                     'Lihat semua',
@@ -331,7 +352,7 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(
               height: 20,
             ),
-            HakTanggunganScroll(0,3,(){}),
+            HakTanggunganScroll(13,17,(){}),
 
             SizedBox(
               height: 30,
@@ -340,7 +361,7 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Alamat Notaris',
+                  'Kantor Notaris',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20,
@@ -355,41 +376,170 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
 
-
-
-
-
-
-            /*Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //////////////////////////////////////////// foto kantor
+        Center(
+          child: Container(
+            //width: 190,
+            //height: 300,
+            margin: EdgeInsets.only(left: 10),
+            decoration: BoxDecoration(
+              //color: Color(0xFF292B37),
+              color: orangeDeep,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  //color: Color(0xFF292B37).withOpacity(0.5),
+                    color: Colors.orangeAccent.withOpacity(0.5),
+                    spreadRadius: 1,
+                    blurRadius: 6
+                )
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                layananNotaris(
-                  img: 'paris.png',
-                  city: 'Balik Nama',
-                  country: 'Perlihan Hak',
-                  onClick: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (contex) => RegisterScreen()));
-                  },
-                ),
-                layananNotaris(
-                  img: 'paris.png',
-                  city: 'AJB',
-                  country: 'Peralihan Hak',
-                  onClick: null,
-                ),
-                layananNotaris(
-                  img: 'paris.png',
-                  city: 'Hak Tanggungan',
-                  country: 'Peralihan Hak',
-                  onClick: null,
+                ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(10)
+                      //topRight: Radius.circular(10),
+                      //topLeft: Radius.circular(10)
+                  ),
+                  child: Image.asset(
+                    'assets/img/kantornotaris.jpg',
+                    //height: 180,
+                    //width: 190,
+                    width: MediaQuery.of(context).size.width*0.7,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ],
-            ),*/
+            ),),
+        ),
+            //////////////////////////////////////////// foto kantor
+
+            SizedBox(
+              height: 30,
+            ),
+
+            Padding(
+              padding: const EdgeInsets.only(left: 15),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(Icons.email_rounded,color: Colors.white,),
+                      SizedBox(width: 10,),
+                      InkWell(
+                        onTap: (){
+                          //final Uri url = Uri.parse("https://goo.gl/maps/vz2HzvAmwd1PtNF79");
+                          //launchUrl(url);
+                          final Uri emailLaunchUri = Uri(
+                            scheme: 'mailto',
+                            path: 'nilakandijanuarti@gmail.com',
+                            query: encodeQueryParameters(<String, String>{
+                              'subject': 'Example Subject & Symbols are allowed!',
+                            }),
+                          );
+
+                          launchUrl(emailLaunchUri);
+
+
+
+                        },
+                        child: Text(
+                          'nilakandijanuarti@gmail.com',
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Colors.blueAccent,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  SizedBox(height: 5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(Icons.location_on,color: Colors.white,),
+                      SizedBox(width: 10,),
+                      InkWell(
+                        onTap: (){
+                          final Uri url = Uri.parse("https://goo.gl/maps/vz2HzvAmwd1PtNF79");
+                          launchUrl(url);
+
+                        },
+                        child: Text(
+                          'Lokasi Kantor Notaris',
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Colors.blueAccent,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 5),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(Icons.call,color: Colors.white,),
+                      SizedBox(width: 10,),
+                      InkWell(
+                        onTap: (){
+                          //final Uri phoneNumber = Uri.parse('');
+                          launch('tel:+6285231611058');
+
+                        },
+                        child: Text(
+                          '+6285231611058',
+                          style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Colors.blueAccent,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+
+            SizedBox(
+              height: 20,
+            ),
+
+            SizedBox(
+              height: 20,
+            ),
+
+
+
+
+
+
+
+
+
+
+
 
             ElevatedButton(onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeAdmin()));
-            }, child: Text('Admin'))
+            }, child: Text('Admin')),
+
+
+
+
           ],
         ),
       ),
@@ -699,6 +849,102 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  HakTanggunganScroll2(jumlah1,jumlah2,onClick) {
+    return Row(
+      children: [
+        for(int i=jumlah1; i<jumlah2; i++)
+          InkWell(
+            onTap: (){
+              //print(_allLayanan[i]);
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>LayananDetail(idx: _allLayanan[i])));
+
+            },
+            child: Container(
+              width: MediaQuery.of(context).size.width*0.8,
+              height: 400,
+              margin: EdgeInsets.only(left: 10,right: 10),
+              decoration: BoxDecoration(
+                color: orangeDeep,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    //color: Color(0xFF292B37).withOpacity(0.5),
+                      color: Colors.orangeAccent.withOpacity(0.5),
+                      spreadRadius: 1,
+                      blurRadius: 6
+                  )
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(10),
+                        topLeft: Radius.circular(10)
+                    ),
+                    child: Image.asset(
+                      'assets/img/kantornotaris.jpg',
+                      //_allLayanan[i]['foto'],
+                      //height: 180,
+                      width: MediaQuery.of(context).size.width*0.8,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 5
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          //"Perjanjian Pra Nikah"
+                          '${_allLayanan[i]['layanan']}'
+                          ,style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 19
+                        ),
+                        ),
+                        SizedBox(height: 5,),
+                        Text("  ${_allLayanan[i]['jenis_layanan']}",
+                          style: TextStyle(
+                              color: Colors.white54,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        SizedBox(height: 8,),
+                        Row(
+                          children: [
+                            Icon(Icons.star,color: Colors.amber,),
+                            SizedBox(width: 5,),
+                            Text("8.5",
+                              style: TextStyle(
+                                  color: Colors.white54,
+                                  fontSize: 16
+                              ),)
+
+                          ],
+                        )
+
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
+          )
+      ],
+    );
+  }
+
+  Future<void> _buttonUri(String url,
+  {bool forceWebView = false, bool enableJavaScript = false}) async {
+    await launch(url);
+  }
+
 
 
 
