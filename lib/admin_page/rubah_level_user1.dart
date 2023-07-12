@@ -99,26 +99,6 @@ class _RubahLevelUser1State extends State<RubahLevelUser1> {
     });
   }
 
-  _runFilter2(String enteredKeyword) {
-    List<dynamic> results = [];
-
-    if (enteredKeyword.isEmpty) {
-      // if the search field is empty or only contains white-space, we'll display all users
-      results = jsonList;
-    } else {
-      results = _foundData
-          .where((user) =>
-          user["username"].toLowerCase().contains(enteredKeyword.toLowerCase()))
-          .toList();
-      // we use the toLowerCase() method to make it case-insensitive
-
-    }
-    setState(() {
-      _foundData = results;
-    });
-  }
-
-  ///////////////////////////////////////
 
 
 
@@ -151,7 +131,7 @@ class _RubahLevelUser1State extends State<RubahLevelUser1> {
               ),
             ),
             Text(
-              'yang ingin anda tambahkan',
+              'yang ingin anda buat Admin',
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
