@@ -2,6 +2,7 @@
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:monitoringdd/screens/login_screen.dart';
 import 'package:monitoringdd/widgets/btn_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -89,7 +90,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         text: " Sudah punya akun",
                                         style: TextStyle(color: orangeColor),
                                           recognizer: TapGestureRecognizer()..onTap = () {
-                                            Navigator.pop(context);
+                                            //Navigator.pop(context);
+                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
                                           }
                                       ),
                                     ]

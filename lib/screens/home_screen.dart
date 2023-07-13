@@ -142,7 +142,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Icon(
                   Icons.notifications,
-                  color: Colors.white,
+                  //color: Colors.white,
+                  color: Colors.transparent,
                 )
               ],
             ),

@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:monitoringdd/admin_page/pick_user.dart';
 import 'package:monitoringdd/admin_page/post_data_user.dart';
 import 'package:monitoringdd/admin_page/rubah_level_user1.dart';
+import 'package:monitoringdd/admin_page/rubah_status_terdaftar1.dart';
 import 'package:monitoringdd/utils/color.dart';
 import 'package:provider/provider.dart';
 
@@ -39,7 +40,11 @@ class _HomeAdminState extends State<HomeAdmin> {
     //print(response.data['data'].length);
     //print(response.data['data']);
     //print(response.data['data']['Pendaftar Baru']);
-    listRiwayat = response;
+
+    setState(() {
+      listRiwayat = response;
+
+    });
   }
 
   @override
@@ -270,40 +275,46 @@ class _HomeAdminState extends State<HomeAdmin> {
                         ),
                       ),
 
-                      Container(
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black26,
-                                offset: Offset(0,6),
-                                blurRadius: 12,
-                                spreadRadius: 6
-                            )
-                          ],
-                          borderRadius: BorderRadius.circular(20),
-                          color: orangeDeep,
-                        ),
-                        height: MediaQuery.of(context).size.height*0.2,
-                        width: MediaQuery.of(context).size.width*0.4,
-                        child: Column(
-                          children: [
-                            SizedBox(height: 10,),
-                            Spacer(),
-                            Icon(Icons.file_copy_outlined,color: Colors.white,size: 50,),
-                            Spacer(),
-                            Text('Rubah Status \n Terdaftar',
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.poppins(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600),),
-                            SizedBox(height: 20,)
-                            /*Text("Buat Akun User",
-                              style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: GoogleFonts.acme("")
-                            ),)*/
-                          ],
+                      InkWell(
+                        onTap:(){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>RubahStatusTerdaftar1()));
+
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.black26,
+                                  offset: Offset(0,6),
+                                  blurRadius: 12,
+                                  spreadRadius: 6
+                              )
+                            ],
+                            borderRadius: BorderRadius.circular(20),
+                            color: orangeDeep,
+                          ),
+                          height: MediaQuery.of(context).size.height*0.2,
+                          width: MediaQuery.of(context).size.width*0.4,
+                          child: Column(
+                            children: [
+                              SizedBox(height: 10,),
+                              Spacer(),
+                              Icon(Icons.file_copy_outlined,color: Colors.white,size: 50,),
+                              Spacer(),
+                              Text('Rubah Status \n Terdaftar',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.poppins(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600),),
+                              SizedBox(height: 20,)
+                              /*Text("Buat Akun User",
+                                style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: GoogleFonts.acme("")
+                              ),)*/
+                            ],
+                          ),
                         ),
                       ),
 
