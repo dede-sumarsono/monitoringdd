@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:monitoringdd/screens/login_screen.dart';
 import 'package:monitoringdd/utils/color.dart';
 import 'package:monitoringdd/widgets/btn_widget.dart';
 import 'package:provider/provider.dart';
@@ -132,24 +133,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         height: 30,
                       ),
 
-
-
-                      /*ButtonWidget(btnText: 'Rubah User jadi Admin',onClick: () {
+                      ButtonWidget(btnText: 'Log Out',onClick: () {
                         AwesomeDialog(
                           context: context,
                           dialogType: DialogType.question,
                           animType: AnimType.topSlide,
                           showCloseIcon: true,
                           title: "Peringatan",
-                          desc: "Apakah anda yakin akan mengupdate user ${idx['username']} menjadi Admin? ",
+                          desc: "Apakah anda yakin akan keluar ? ",
                           btnCancelOnPress: (){},
                           btnOkOnPress: (){
                             Provider.of<Auth>(context,listen: false)
-                                .userToAdmin(id: idx['id']);
+                                .logout();
+                            Route route = MaterialPageRoute(builder: (context) => LoginScreen());
+                            Navigator.pushReplacement(context, route);
                           },
                         ).show();
 
-                      },),*/
+                      },),
 
                       const SizedBox(
                         height: 30,

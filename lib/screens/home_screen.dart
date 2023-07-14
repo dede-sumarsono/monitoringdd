@@ -1,3 +1,4 @@
+
 import 'package:dio/dio.dart' as Dio;
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -24,6 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final storage = new FlutterSecureStorage();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  var score;
+  var score2;
 
   final List<Map<String, dynamic>> _allLayanan = [
     {"id": 0, "layanan": "Jual Beli",                     "waktu":"4 Bulan", "jenis_layanan": 'Peralihan Hak',"foto": "assets/img/jualbeli2.jpg", "deskripsi":"Bisa disebut dengan PJB atau Pengikatan Jual Beli merupakan kesepakatan antara penjual untuk menjual properti miliknya kepada pembeli yang dibuat dengan akta notaris. PJB bisa dibuat karena alasan tertentu, seperti belum lunasnya pembayaran harga jual beli dan belum dibayarkannya pajak-pajak yang timbul karena jual beli"},
@@ -68,8 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Provider.of<Auth>(context, listen: false).getToken(token: token);
     print(token);
   }
-  var score;
-  var score2;
+
 
   void readScore() async {
     //print('user id adalah $id');
@@ -82,6 +84,10 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       score = hasil;
       score2 = hasil2;
+
+      if (score2 == null){
+        readScore();
+      }
     });
 
   }
@@ -94,14 +100,15 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final userdata = Provider.of<Auth>(context);
 
-    //var prosesVerifikasi = readScore(userdata.user!.id);
-    //print('ini hasilnya $score');
 
 
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: orangeLightColor,
-      body: Container(
+      body:
+      score2 == null ? Center(child: CircularProgressIndicator(
+        color: Colors.white,)) :
+      Container(
         decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [Colors.deepOrange, orangeLightColor],
@@ -123,10 +130,21 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Row(
                   children: [
-                    Image.asset(
-                      'assets/img/notary.png',
-                      height: 40,
-                      width: 40,
+                    InkWell(
+                      onTap: (){
+                        if(scaffoldKey.currentState!.isDrawerOpen){
+                          scaffoldKey.currentState!.closeDrawer();
+                          //close drawer, if drawer is open
+                        }else{
+                          scaffoldKey.currentState!.openDrawer();
+                          //open drawer, if drawer is closed
+                        }
+                      },
+                      child: Image.asset(
+                        'assets/img/notary.png',
+                        height: 40,
+                        width: 40,
+                      ),
                     ),
                     SizedBox(
                       width: 20,

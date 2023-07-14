@@ -1,9 +1,13 @@
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:monitoringdd/widgets/btn_widget.dart';
 import 'package:monitoringdd/widgets/header_container.dart';
+import 'package:provider/provider.dart';
 
+import '../services/auth.dart';
 import '../utils/color.dart';
 import '../utils/textStyle.dart';
 
@@ -22,7 +26,7 @@ class _RubahStatusTerdaftar3State extends State<RubahStatusTerdaftar3> {
   late Map idx;
   //var data = idx['name'];
 
-  List status = [
+  final status = [
     'Pendaftar Baru',
     'Verifikasi Dokumen',
     'Pendaftaran Pajak Oleh Notaris',
@@ -77,10 +81,272 @@ class _RubahStatusTerdaftar3State extends State<RubahStatusTerdaftar3> {
 
   final itemsList = ['Item 1','Item 2','Item 3','Item 4','Item 5'];
   String? value;
+  late int indexvalue;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    int valuetemp = idx['status_number'];
+
+    setState(() {
+      value = status[valuetemp];
+    });
+
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: MediaQuery.of(context).size.height * 0.4,
+                child: Stack(
+                  children: [
+                    //Widget greenIntroWidgetWithoutLogos(),
+                    greenIntroWidgetWithoutLogos(),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: InkWell(
+                        onTap: () {
+                          //getImage(ImageSource.camera);
+                        },
+                        child:
+                        //selectedImage == null?
+                        Container(
+                          width: 120,
+                          height: 120,
+                          margin: EdgeInsets.only(bottom: 20),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Color(0xffD6D6D6)),
+                          child: Center(
+                            child: Icon(
+                              Icons.camera_alt_outlined,
+                              size: 40,
+                              color: Colors.white,
+                            ),
+                          ),
+                        )
+                        /*    :
+                        Container(
+                          width: 120,
+                          height: 120,
+                          margin: EdgeInsets.only(bottom: 20),
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: FileImage(selectedImage!),
+                                  fit: BoxFit.fill),
+                              shape: BoxShape.circle,
+                              color: Color(0xffD6D6D6)),
+                        ),*/
+                      ),
+                    )
+                  ],
+                ),
+              ),
+
+              SizedBox(height: 20,),
+
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 23),
+                child: Form(
+                  //key: formKey,
+                  child: Column(
+
+                    children: [
+                      TextFieldWidget(
+                          //'Username',userdata.user!.username, Icons.person_outlined),
+                          'Username',idx['username_untuk_user'], Icons.person_outlined),
+
+                      SizedBox(
+                        height: 10,
+                      ),
+
+                      TextFieldWidget(
+                          //'E-mail',userdata.user!.email, Icons.mail_outline),
+                          'E-mail',idx['jenis_layanan'], Icons.mail_outline),
+
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      //TextFieldWidget('No.Telepon',userdata.user!.notelepon, Icons.call),
+                      TextFieldWidget('No.Telepon',idx['jenis_pesanan'], Icons.call),
+                      const SizedBox(
+                        height: 10,
+                      ),
+
+                      TextFieldWidget('Dibuat pada',idx['created_at'].substring(0,10),
+                          Icons.watch_later_outlined),
+
+                      const SizedBox(
+                        height: 10,
+                      ),
+
+                      TextFieldWidget('Dibuat pada',idx['status'],
+                          Icons.watch_later_outlined),
+
+                      const SizedBox(
+                        height: 10,
+                      ),
+
+
+/////////////////////////////////////////DropDownButton
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Rubah Status Terdaftar',
+                        style: GoogleFonts.poppins(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xffA7A7A7)),
+                      ),
+                      const SizedBox(
+                        height: 6,
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        // height: 50,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                //color: Colors.black.withOpacity(0.05),
+                                  color: Colors.black.withOpacity(0.25),
+                                  spreadRadius: 1,
+                                  blurRadius: 1)
+                            ],
+                            borderRadius: BorderRadius.circular(8)),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Icon(Icons.app_registration, color: orangeColor,),
+                            ),
+
+
+                            Expanded(
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton<String>(
+                                  value: value,
+                                  iconSize: 30,
+                                  isExpanded: true,
+                                  icon: Icon(Icons.arrow_drop_down,color: Colors.black,),
+                                  //items: itemsList.map(buildMenuItem).toList(),
+                                  items: status.map(buildMenuItem).toList(),
+                                  onChanged: (value) => setState(() {
+                                    this.value = value;
+
+                                    print(value);
+                                    print(status.indexOf(value!));
+
+                                    this.indexvalue = status.indexOf(value!);
+                                    print('valuenya adalah $indexvalue');
+
+                                  }),
+                                ),
+                              ),
+                            ),
+
+
+
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+/////////////////////////////////////////DropDownButton
+
+
+
+                    SizedBox(height: 30,),
+
+                      ButtonWidget(btnText: 'Rubah Status Terdaftar',onClick: () {
+                        AwesomeDialog(
+                          context: context,
+                          dialogType: DialogType.question,
+                          animType: AnimType.topSlide,
+                          showCloseIcon: true,
+                          title: "Peringatan",
+                          desc: "Apakah anda yakin akan mengupdate status terdaftar menjadi $value ? ",
+                          btnCancelOnPress: (){},
+                          btnOkOnPress: (){
+
+                            Map creds = {
+                              'status' : value,
+                              'status_number' : status.indexOf(value!)
+
+                            };
+
+
+                            Provider.of<Auth>(context,listen: false)
+                                .updateStatusUser(id: idx['id'],creds: creds);
+                            //print(value);
+                            //print(status.indexOf(value!));
+
+                          },
+                        ).show();
+
+                      },),
+
+                      const SizedBox(
+                        height: 30,
+                      ),
+
+                      /*ButtonWidget(btnText: 'Hapus User',onClick: () {
+                        print('Button hapus clicked');
+                        AwesomeDialog(
+                          context: context,
+                          dialogType: DialogType.warning,
+                          animType: AnimType.topSlide,
+                          showCloseIcon: true,
+                          title: "Peringatan",
+                          desc: "Akun ini akan dihapus",
+                          btnCancelOnPress: (){},
+                          btnOkOnPress: (){
+                            Provider.of<Auth>(context,listen: false)
+                                .userToAdmin(id: idx['id']);
+                          },
+                        ).show(); },),*/
+
+
+
+
+
+
+                      SizedBox(height: 30,)
+
+
+
+
+
+                    ],
+
+                  ),
+
+                ),
+              ),
+
+
+
+
+
+
+
+            ],
+          ),
+        )
+
+    );
+
+
+      /*SafeArea(
         child: Scaffold(
           body: Stack(
             children: [
@@ -115,7 +381,7 @@ class _RubahStatusTerdaftar3State extends State<RubahStatusTerdaftar3> {
 
             ],
           ),
-        ));
+        ));*/
 
 
   }
@@ -221,7 +487,6 @@ class _RubahStatusTerdaftar3State extends State<RubahStatusTerdaftar3> {
                   SizedBox(height: 10,),
 
                   Text(
-                    //"aliquam id diam maecenas ultricies mi eget mauris pharetra et ultrices neque ornare aenean euismod",
                     "${rincian_status[0]}",
                     style: secondaryTS2,
 
@@ -234,19 +499,35 @@ class _RubahStatusTerdaftar3State extends State<RubahStatusTerdaftar3> {
                     ),
                   ),
 
-                  Text(
-                    "Deskripsi",
-                    style: babTS,
+                  ///////////////////////DropDownButton
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 12,vertical: 4),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.black,width: 4)
+                    ),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: value,
+                        iconSize: 36,
+                        isExpanded: true,
+                        icon: Icon(Icons.arrow_drop_down,color: Colors.black,),
+                        //items: itemsList.map(buildMenuItem).toList(),
+                        items: status.map(buildMenuItem).toList(),
+                        onChanged: (value) => setState(() {
+                          this.value = value;
+
+                          print(value);
+                          print(status.indexOf(value!));
+                          //print(status[index]);
+                        }),
+                      ),
+                    ),
                   ),
 
-                  SizedBox(height: 10,),
+                  ///////////////////////DropDownButton
 
-                  Text(
-                    //"aliquam id diam maecenas ultricies mi eget mauris pharetra et ultrices neque ornare aenean euismod",
-                    "${rincian_status[0]}",
-                    style: secondaryTS2,
 
-                  ),
 
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15),
@@ -255,24 +536,8 @@ class _RubahStatusTerdaftar3State extends State<RubahStatusTerdaftar3> {
                     ),
                   ),
 
-                  DropdownButton<String>(
-                    value: value,
-                    iconSize: 36,
-                    isExpanded: true,
-                    icon: Icon(Icons.arrow_drop_down,color: Colors.black,),
-                    items: itemsList.map(buildMenuItem).toList(),
-                    onChanged: (value) => setState(() {
-                      this.value = value;
-                    })
-
-                    ,
-
-                  ),
-
-
-
                   Text(
-                    "Status",
+                    "Status saat ini",
                     style: babTS,
                   ),
 
@@ -401,8 +666,112 @@ class _RubahStatusTerdaftar3State extends State<RubahStatusTerdaftar3> {
   DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
       value: item,
       child: Text(item,
-        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),
+        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),
       ),
     );
+
+
+////////////////Profile
+  TextFieldWidget(String title,String isian, IconData iconData) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: GoogleFonts.poppins(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: Color(0xffA7A7A7)),
+        ),
+        const SizedBox(
+          height: 6,
+        ),
+        Container(
+          width: MediaQuery.of(context).size.width,
+          // height: 50,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  //color: Colors.black.withOpacity(0.05),
+                    color: Colors.black.withOpacity(0.25),
+                    spreadRadius: 1,
+                    blurRadius: 1)
+              ],
+              borderRadius: BorderRadius.circular(8)),
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Icon(iconData, color: orangeColor,),
+              ),
+              Text(isian,
+                style: GoogleFonts.poppins(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black54),
+              ),
+            ],
+          ),
+
+
+
+
+        )
+      ],
+    );
   }
+
+  Widget greenIntroWidgetWithoutLogos({String title = "Status Terdaftar Edit", String? subtitle}) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/img/mask2.png'),
+              fit: BoxFit.fill
+          )
+      ),
+      height: MediaQuery.of(context).size.height*0.3,
+      child: Container(
+          height: MediaQuery.of(context).size.height*0.1,
+          width: MediaQuery.of(context).size.width,
+          margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height*0.05),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(title,style: GoogleFonts.poppins(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.white),),
+              if(subtitle != null) Text(subtitle,style: GoogleFonts.poppins(fontSize: 16,fontWeight: FontWeight.w400,color: Colors.white),),
+
+            ],
+          )),
+
+
+
+    );
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  }
+
+
+
+
+
+
+
+
 

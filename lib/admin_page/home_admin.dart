@@ -87,26 +87,14 @@ class _HomeAdminState extends State<HomeAdmin> {
 
 
 
-  /*List _allIcon = [
-    Icons.person_add,
-    Icons.verified_outlined,
-    Icons.book,
-    Icons.done_outline_sharp,
-    Icons.app_registration,
-    Icons.app_registration,
-    Icons.app_registration,
-    Icons.app_registration,
-    Icons.app_registration,
-    Icons.app_registration,
-  ];*/
-
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       //backgroundColor: Colors.deepOrange,
-      body: SafeArea(
+      body:
+      listRiwayat == null ? Center(child: CircularProgressIndicator(color: orangeDeep,)):
+      SafeArea(
         child:
           CustomScrollView(
             slivers: [

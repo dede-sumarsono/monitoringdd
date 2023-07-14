@@ -213,6 +213,30 @@ class Auth extends ChangeNotifier{
 
   }
 
+  void updateStatusUser ({required int id,required Map creds}) async {
+    try{
+      Dio.Response response = await dio().post('/rubahstatusterdaftar/$id',data: creds,options: Dio.Options(headers: {'Authorization' : 'Bearer $_token'}));
+      print(response.data.toString());
+
+      String toast = response.data['data'].toString();
+      Fluttertoast.showToast(
+          msg: toast,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+
+
+    } catch(e){
+      print(e);
+    }
+    notifyListeners();
+
+  }
+
   void deleteUser ({required int id}) async {
     try{
       Dio.Response response = await dio().post('/deleteuser/$id',options: Dio.Options(headers: {'Authorization' : 'Bearer $_token'}));
