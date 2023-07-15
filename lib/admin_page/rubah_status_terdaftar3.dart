@@ -295,6 +295,30 @@ class _RubahStatusTerdaftar3State extends State<RubahStatusTerdaftar3> {
 
                       },),
 
+                      SizedBox(height: 30,),
+
+                      ButtonWidget(btnText: 'Hapus Data Terdaftar',onClick: () {
+                        AwesomeDialog(
+                          context: context,
+                          dialogType: DialogType.question,
+                          animType: AnimType.topSlide,
+                          showCloseIcon: true,
+                          title: "Peringatan",
+                          desc: "Apakah anda yakin akan menghapus data terdaftar ini ? ",
+                          btnCancelOnPress: (){},
+                          btnOkOnPress: (){
+
+
+                            Provider.of<Auth>(context,listen: false)
+                                .deletePost(id: idx['id']);
+                            //print(value);
+                            //print(status.indexOf(value!));
+
+                          },
+                        ).show();
+
+                      },),
+
                       const SizedBox(
                         height: 30,
                       ),

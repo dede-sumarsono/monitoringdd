@@ -313,6 +313,31 @@ class Auth extends ChangeNotifier{
     }
   }
 
+  void deletePost ({required int id}) async {
+    try{
+      Dio.Response response = await dio().post('/delete/$id',options: Dio.Options(headers: {'Authorization' : 'Bearer $_token'}));
+      print(response.data.toString());
+
+      //String toast = response.data['data'].toString();
+      String toast = 'Data Berhasil Dihapus';
+      Fluttertoast.showToast(
+          msg: toast,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+
+
+    } catch(e){
+      print(e);
+    }
+    notifyListeners();
+
+  }
+
 
 
 }

@@ -27,6 +27,7 @@ class _HomeAdminState extends State<HomeAdmin> {
 
   final storage = new FlutterSecureStorage();
   var listRiwayat;
+  var prosesNselesai;
 
 
   readRiwayat() async {
@@ -36,13 +37,18 @@ class _HomeAdminState extends State<HomeAdmin> {
     Dio.Response response = await dio().get('/jumlahstatuspesanan',
         options: Dio.Options(headers: {'Authorization' : 'Bearer $token'}));
 
+    Dio.Response responseStatus = await dio().get('/statusprosesselesai',
+        options: Dio.Options(headers: {'Authorization' : 'Bearer $token'}));
+
     print(response);
+    print(responseStatus.data['data']['Proses']);
     //print(response.data['data'].length);
     //print(response.data['data']);
     //print(response.data['data']['Pendaftar Baru']);
 
     setState(() {
       listRiwayat = response;
+      prosesNselesai = responseStatus;
 
     });
   }
@@ -328,7 +334,7 @@ class _HomeAdminState extends State<HomeAdmin> {
                       Text('Lihat Semua',style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 15,
-                          color: Colors.grey
+                          color: Colors.white
                       ),),
 
                     ],
@@ -446,6 +452,7 @@ class _HomeAdminState extends State<HomeAdmin> {
   }
 
   Widget _head(){
+    final userdata = Provider.of<Auth>(context);
     return Stack(
       children: [
         Column(
@@ -463,7 +470,7 @@ class _HomeAdminState extends State<HomeAdmin> {
               ),
               child: Stack(
                 children: [
-                  Positioned(
+                  /*Positioned(
                       top: 5,
                       left: 330,
                       child: ClipRRect(
@@ -478,19 +485,19 @@ class _HomeAdminState extends State<HomeAdmin> {
                             color: Colors.white,
                           ),
                         ),
-                      )),
+                      )),*/
                   Padding(
                     padding: const EdgeInsets.only(top: 35,left: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Good Afternoon',
+                        Text('Have a Good Day',
                           style: TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 16,
                               color: Colors.white.withOpacity(0.8)
                           ),),
-                        Text('Dede Sumarsono',
+                        Text('${userdata.user?.username}',
                           style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 20,
@@ -538,7 +545,8 @@ class _HomeAdminState extends State<HomeAdmin> {
                             color: Colors.white
                         ),),
                       Icon(Icons.more_horiz,
-                        color: Colors.white,)
+                        //color: Colors.white,)
+                        color: Colors.deepOrange,)
                     ],
                   ),
                 ),
@@ -547,7 +555,7 @@ class _HomeAdminState extends State<HomeAdmin> {
                   padding: const EdgeInsets.only(left: 15),
                   child: Row(
                     children: [
-                      Text('\$ 2,957'
+                      Text('${prosesNselesai.data['data']['Proses']+prosesNselesai.data['data']["Selesai"]} Order'
                         ,style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.w600,
@@ -610,13 +618,19 @@ class _HomeAdminState extends State<HomeAdmin> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('10',style: TextStyle(
+                      Text(
+                        //'10'
+                        '${prosesNselesai.data['data']['Proses']}'
+                        ,style: TextStyle(
                           fontSize: 17,
                           fontWeight: FontWeight.w600,
                           color: Colors.white
                       ),),
 
-                      Text('10',style: TextStyle(
+                      Text(
+                        //'10'
+                        '${prosesNselesai.data['data']['Selesai']}'
+                        ,style: TextStyle(
                           fontSize: 17,
                           fontWeight: FontWeight.w600,
                           color: Colors.white
