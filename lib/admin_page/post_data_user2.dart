@@ -88,10 +88,10 @@ class _PostDataUser2State extends State<PostDataUser2> {
                       ),
                     ],
                   ),
-                  Icon(
+                  /*Icon(
                     Icons.notifications,
                     color: Colors.white,
-                  )
+                  )*/
                 ],
               ),
               SizedBox(

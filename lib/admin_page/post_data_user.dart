@@ -263,7 +263,7 @@ class _PostDataUserState extends State<PostDataUser> {
                         /////////////////////////////////////// Template
 
                         SizedBox(
-                          height: 20,
+                          height: 80,
                         ),
 
                         Expanded(
@@ -299,17 +299,20 @@ class _PostDataUserState extends State<PostDataUser> {
               text: TextSpan(children: [
             TextSpan(
                 text: "Akun User belum terdaftar ? ",
-                style: TextStyle(color: Colors.black)),
+                //style: TextStyle(color: Colors.black)),
+                style: TextStyle(color: Colors.white)),
             TextSpan(
                 text: " Daftarkan akun suer",
-                style: TextStyle(color: orangeColor),
-                recognizer: TapGestureRecognizer()
+                //style: TextStyle(color: orangeColor),
+                style: TextStyle(color: Colors.white),
+                /*recognizer: TapGestureRecognizer()
                   ..onTap = () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => RegisterScreen()));
-                  }),
+                  }*/
+                  ),
           ])),
 
 

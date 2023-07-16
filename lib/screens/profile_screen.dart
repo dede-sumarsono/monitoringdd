@@ -1,18 +1,24 @@
 
 
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:dio/dio.dart' as Dio;
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:monitoringdd/screens/home_screen_navbar.dart';
 import 'package:monitoringdd/screens/login_screen.dart';
 import 'package:monitoringdd/utils/color.dart';
 import 'package:monitoringdd/widgets/btn_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../services/auth.dart';
+import '../services/dio.dart';
 import '../widgets/header_container.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -27,19 +33,115 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
 
 
+  final storage = new FlutterSecureStorage();
 
   final ImagePicker _picker = ImagePicker();
   File? selectedImage;
+  File? imagedb;
+  var _tooken;
 
-  getImage(ImageSource source) async {
+  getImage(ImageSource source, int iduser) async {
+    String? token = await storage.read(key: 'token');
     final XFile? image = await _picker.pickImage(source: source);
     if (image != null) {
       selectedImage = File(image.path);
-      setState(() {});
+      String jejak = image.path.toString();
+      String fileName = image.path.split('/').last;
+      //String path = image.path.split('/').last.;
+      String dir = jejak.substring(0,jejak.lastIndexOf(fileName));
+      print(fileName);
+      print(dir);
+
+      FormData data = FormData.fromMap({
+        //'avatar': MultipartFile.fromFile(image.path)
+        'avatar': await MultipartFile.fromFile(dir,filename: fileName)
+      });
+
+
+      Dio.Response response = await dio().post('/updatefoto/$iduser',
+          data: data,
+          options: Dio.Options(headers: {'Authorization': 'Bearer $token'}),
+          /*onSendProgress: (int sent, int total) {
+
+            if(sent == total){
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text("Data Terkirim"),
+              ));
+
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>HomeScreenNavBar()));
+            }
+            print('$sent $total');
+          }*/
+          );
+      print(response);
+
+
+
+
+      //uploadfile(selectedImage!, image.path, iduser, token);
+
+
+
+
     }
   }
 
+  /*Future<String> uploadImage(File file) async {
+
+    FormData formData = FormData.fromMap({
+      "file":
+      await MultipartFile.fromFile(file.path, filename:fileName),
+    });
+    response = await dio.post("/info", data: formData);
+  }*/
+
+  uploadfile (File data,lokasi,iduser,token) async {
+    String fileName = lokasi.path.split('/').last;
+    print(' filenamenya : $fileName');
+
+    FormData data = FormData.fromMap({
+      //'avatar': MultipartFile.fromFile(image.path)
+      'avatar': await MultipartFile.fromFile(lokasi,filename: fileName)
+    });
+
+    /*Dio.Response response = await dio().post('/updatefoto/$iduser',
+        data: data,
+        options: Dio.Options(headers: {'Authorization': 'Bearer $token'}),
+        onSendProgress: (int sent, int total) {
+
+          if(sent == total){
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text("Data Terkirim"),
+            ));
+
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>HomeScreenNavBar()));
+          }
+          print('$sent $total');
+
+
+        });
+    print(response.toString());*/
+  }
+
+  getToken()async{
+    String? token = await storage.read(key: 'token');
+
+    setState(() {
+      _tooken = token;
+    });
+  }
+
+
+
+
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getToken();
+    super.initState();
+  }
 
 
 
@@ -63,10 +165,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       alignment: Alignment.bottomCenter,
                       child: InkWell(
                         onTap: () {
-                          getImage(ImageSource.camera);
+                          //getImage(ImageSource.camera);
                         },
-                        child: selectedImage == null
-                            ? Container(
+                        //child: selectedImage == null
+                        child:
+                            _tooken == null ? CircularProgressIndicator():
+
+                        Container(
+                          width: 120,
+                          height: 120,
+                          /*child: Icon(Icons.camera_alt_outlined,size: 40,
+                            color: Colors.white,),*/
+                          margin: EdgeInsets.only(bottom: 20),
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                //image: FileImage(selectedImage!),
+                                  image: NetworkImage(
+                                      "http://10.0.2.2/monitoringdd/public/api/downloadAvatar"
+                                          ,headers: {'accept':'Application/Json','Authorization' : 'Bearer $_tooken'}
+                                          //,headers: {'accept':'Application/Json','Authorization' : 'Bearer $_tooken',"Content-type":"multipart/form-data"}
+
+                                  ),
+                                  fit: BoxFit.cover),
+                              shape: BoxShape.circle,
+                              color: Color(0xffD6D6D6)),
+                        )
+
+
+                         /*imagedb==null ? CircularProgressIndicator():
+                            Container(
                           width: 120,
                           height: 120,
                           margin: EdgeInsets.only(bottom: 20),
@@ -80,18 +207,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               color: Colors.white,
                             ),
                           ),
-                        ):
-                        Container(
+                        )*/
+
+
+
+
+                        /*:Container(
                           width: 120,
                           height: 120,
                           margin: EdgeInsets.only(bottom: 20),
                           decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image: FileImage(selectedImage!),
+                                  //image: FileImage(selectedImage!),
+                                  image: FileImage(imagedb!),
                                   fit: BoxFit.fill),
                               shape: BoxShape.circle,
                               color: Color(0xffD6D6D6)),
-                        ),
+                        ),*/
                       ),
                     )
                   ],
@@ -132,6 +264,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       const SizedBox(
                         height: 30,
                       ),
+
+                      ButtonWidget(btnText: 'Update Image',onClick: () {
+                       //userdata.user!.username
+
+                        getImage(ImageSource.camera, userdata.user!.id);
+
+
+
+                      },),
+
+                      SizedBox(height: 15,),
 
                       ButtonWidget(btnText: 'Log Out',onClick: () {
                         AwesomeDialog(
@@ -285,7 +428,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         )
       ],
     );
+
+
   }
+
+
+
 
 
 

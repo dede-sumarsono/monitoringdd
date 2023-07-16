@@ -82,11 +82,14 @@ class _HomeScreenState extends State<HomeScreen> {
     print('jadi hasilnya adalah $hasil2');
 
     setState(() {
+
       score = hasil;
       score2 = hasil2;
 
       if (score2 == null){
+        Future.delayed(const Duration(seconds: 2));
         readScore();
+        readToken();
       }
     });
 
