@@ -1,11 +1,11 @@
 
-
 import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dio/dio.dart' as Dio;
 import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -15,6 +15,7 @@ import 'package:monitoringdd/screens/home_screen_navbar.dart';
 import 'package:monitoringdd/screens/login_screen.dart';
 import 'package:monitoringdd/utils/color.dart';
 import 'package:monitoringdd/widgets/btn_widget.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import '../services/auth.dart';
@@ -37,10 +38,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   final ImagePicker _picker = ImagePicker();
   File? selectedImage;
-  File? imagedb;
   var _tooken;
 
+
+  ///////////////////////tidak bisa
   getImage(ImageSource source, int iduser) async {
+    //requestPermission();
+
     String? token = await storage.read(key: 'token');
     final XFile? image = await _picker.pickImage(source: source);
     if (image != null) {
@@ -84,6 +88,67 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
 
     }
+  }
+  ///////////////////////tidak bisa
+
+  uploadFile(int userid) async {
+    String? token = await storage.read(key: 'token');
+
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if(result!=null){
+      File file = File(result.files.single.path ?? " ");
+
+      String filename = file.path.split('/').last;
+      String filepath = file.path;
+
+
+      FormData data = FormData.fromMap({
+        'avatar': await MultipartFile.fromFile(filepath,filename: filename)
+      });
+
+
+      Dio.Response response = await dio().post('/updatefoto/$userid',
+        data: data,
+        options: Dio.Options(headers: {'Authorization': 'Bearer $token'}),
+        /*onSendProgress: (int sent, int total) {
+
+            if(sent == total){
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text("Data Terkirim"),
+              ));
+
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>HomeScreenNavBar()));
+            }
+            print('$sent $total');
+          }*/
+      );
+      print(response);
+
+
+
+    }else{
+      print('result is null');
+    }
+
+
+  }
+
+  requestPermission() async {
+    var status = await Permission.storage.status;
+    print(status);
+    if(!status.isGranted){
+      await Permission.storage.request();
+    }
+
+    var status1 = await Permission.manageExternalStorage.status;
+    print(status1);
+    if(!status.isGranted){
+      await Permission.manageExternalStorage.request();
+    }
+
+
+
   }
 
   /*Future<String> uploadImage(File file) async {
@@ -136,9 +201,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+
   @override
   void initState() {
     // TODO: implement initState
+    requestPermission();
     getToken();
     super.initState();
   }
@@ -268,7 +335,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ButtonWidget(btnText: 'Update Image',onClick: () {
                        //userdata.user!.username
 
-                        getImage(ImageSource.camera, userdata.user!.id);
+                        //getImage(ImageSource.camera, userdata.user!.id);
+                        //getImage(ImageSource.camera, userdata.user!.id);
+                        uploadFile(userdata.user!.id);
 
 
 
@@ -296,7 +365,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       },),
 
                       const SizedBox(
-                        height: 30,
+                        height: 10,
                       ),
 
                       /*ButtonWidget(btnText: 'Hapus User',onClick: () {
@@ -320,7 +389,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
 
 
-                      SizedBox(height: 30,)
+                      SizedBox(height: 20,)
 
 
 

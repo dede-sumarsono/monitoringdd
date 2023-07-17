@@ -1,5 +1,6 @@
 
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dio/dio.dart' as Dio;
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -11,6 +12,7 @@ import 'package:monitoringdd/admin_page/rubah_status_terdaftar1.dart';
 import 'package:monitoringdd/utils/color.dart';
 import 'package:provider/provider.dart';
 
+import '../screens/login_screen.dart';
 import '../screens/register_screen.dart';
 import '../services/auth.dart';
 import '../services/dio.dart';
@@ -470,22 +472,46 @@ class _HomeAdminState extends State<HomeAdmin> {
               ),
               child: Stack(
                 children: [
-                  /*Positioned(
+                  Positioned(
                       top: 5,
                       left: 330,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(7),
-                        child: Container(
-                          height: 40,
-                          width: 40,
-                          color: orangeDeep,
-                          child: Icon(
-                            Icons.notification_add_outlined,
-                            size: 30,
-                            color: Colors.white,
+                      child: InkWell(
+                        onTap: (){
+
+                          AwesomeDialog(
+                            context: context,
+                            dialogType: DialogType.question,
+                            animType: AnimType.topSlide,
+                            showCloseIcon: true,
+                            title: "Peringatan",
+                            desc: "Apakah anda yakin akan keluar ? ",
+                            btnCancelOnPress: (){},
+                            btnOkOnPress: (){
+                              Provider.of<Auth>(context,listen: false)
+                                  .logout();
+                              Route route = MaterialPageRoute(builder: (context) => LoginScreen());
+                              Navigator.pushReplacement(context, route);
+                            },
+                          ).show();
+
+
+
+                        },
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(7),
+                          child: Container(
+                            height: 40,
+                            width: 40,
+                            color: orangeDeep,
+                            child: Icon(
+                              //Icons.notification_add_outlined,
+                              Icons.power_settings_new,
+                              size: 30,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
-                      )),*/
+                      )),
                   Padding(
                     padding: const EdgeInsets.only(top: 35,left: 10),
                     child: Column(

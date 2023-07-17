@@ -133,6 +133,7 @@ class Auth extends ChangeNotifier{
         this.storeToken(token: token);
 
 
+
         notifyListeners();
         print(_user);
         //print(_id);

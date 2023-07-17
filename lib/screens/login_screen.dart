@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:monitoringdd/screens/home_screen.dart';
 import 'package:monitoringdd/screens/register_screen.dart';
+import 'package:monitoringdd/screens/splashscreen.dart';
 import 'package:monitoringdd/widgets/header_container.dart';
 import 'package:provider/provider.dart';
 
@@ -57,8 +58,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                     children:<Widget>[
-                        _textInput(hint: "Email",icon: Icons.email,controller: _emailController,validVar: 'Tolong isi email yang sesuai'),
-                        _textInput(hint: "Password",icon: Icons.vpn_key,controller: _passwordController,validVar: 'Tolong isi password yang sesuai'),
+                        _textInput(hint: "Email",icon: Icons.email,controller: _emailController,validVar: 'Tolong isi email yang sesuai',obse: false),
+                        _textInput(hint: "Password",icon: Icons.vpn_key,controller: _passwordController,validVar: 'Tolong isi password yang sesuai',obse: true),
                         Container(
                           margin: EdgeInsets.only(top: 10),
                           alignment: Alignment.centerRight,
@@ -81,7 +82,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Provider.of<Auth>(context,listen: false)
                                     .login(creds: creds);
                                 //Navigator.pop(context);
-                                Route route = MaterialPageRoute(builder: (context) => HomeScreen());
+                                //Route route = MaterialPageRoute(builder: (context) => HomeScreen());
+                                Route route = MaterialPageRoute(builder: (context) => SplashScreen());
                                 Navigator.pushReplacement(context, route);
                               }
 
@@ -231,7 +233,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
   ////////////////
-  Widget _textInput({controller, hint, icon,validVar}){
+  Widget _textInput({controller, hint, icon,validVar,obse}){
     return Container(
       margin: EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
@@ -240,6 +242,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       padding: EdgeInsets.only(left: 10),
       child: TextFormField(
+        obscureText: obse,
         decoration: InputDecoration(
           border: InputBorder.none,
           //hintText: "Email",

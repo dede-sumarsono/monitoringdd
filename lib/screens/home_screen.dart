@@ -135,13 +135,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     InkWell(
                       onTap: (){
-                        if(scaffoldKey.currentState!.isDrawerOpen){
+                        /*if(scaffoldKey.currentState!.isDrawerOpen){
                           scaffoldKey.currentState!.closeDrawer();
                           //close drawer, if drawer is open
                         }else{
                           scaffoldKey.currentState!.openDrawer();
                           //open drawer, if drawer is closed
-                        }
+                        }*/
                       },
                       child: Image.asset(
                         'assets/img/notary.png',
@@ -225,7 +225,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Text(
                       'Lihat Semua >',
                       style: TextStyle(
-                        color: Colors.white,
+                        //color: Colors.white,
+                        color: Colors.white70,
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
                       ),
@@ -363,7 +364,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Text(
                     'Lihat semua',
                     style: TextStyle(
-                      color: Colors.white,
+                      //color: Colors.white,
+                      color: Colors.white70,
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                     ),
@@ -537,11 +539,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
 
             SizedBox(
-              height: 20,
-            ),
-
-            SizedBox(
-              height: 20,
+              height: 5,
             ),
 
 
@@ -555,9 +553,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
 
-            ElevatedButton(onPressed: (){
+
+            /*ElevatedButton(onPressed: (){
               Navigator.push(context, MaterialPageRoute(builder: (context)=>HomeAdmin()));
-            }, child: Text('Admin')),
+            }, child: Text('Admin')),*/
 
 
 
