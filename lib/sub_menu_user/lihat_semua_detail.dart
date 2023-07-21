@@ -234,7 +234,8 @@ class _LihatSemuaDetailState extends State<LihatSemuaDetail> {
 
                   Text(
                     //"aliquam id diam maecenas ultricies mi eget mauris pharetra et ultrices neque ornare aenean euismod",
-                    "${rincian_status[0]}",
+                    //"${rincian_status[0]}",
+                    "Informasi dari Notaris : ${idx['keterangan']}",
                     style: secondaryTS2,
 
                   ),

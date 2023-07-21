@@ -187,7 +187,7 @@ class _RubahStatusTerdaftar1State extends State<RubahStatusTerdaftar1> {
                             //.push(MaterialPageRoute(builder: (context)=>PostDataUser(idx: _foundData[index]),));
                                 .push(MaterialPageRoute(builder: (context)=>RubahStatusTerdaftar2(idx: _foundData[index]),));
 
-                            Fluttertoast.showToast(
+                            /*Fluttertoast.showToast(
                                 msg: '$index',
                                 toastLength: Toast.LENGTH_SHORT,
                                 gravity: ToastGravity.BOTTOM,
@@ -195,7 +195,7 @@ class _RubahStatusTerdaftar1State extends State<RubahStatusTerdaftar1> {
                                 backgroundColor: Colors.green,
                                 textColor: Colors.white,
                                 fontSize: 16.0
-                            );
+                            );*/
                             print(_foundData[index].toString());
                           },
                         ));

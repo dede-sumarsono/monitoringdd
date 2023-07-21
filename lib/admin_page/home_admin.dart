@@ -474,7 +474,8 @@ class _HomeAdminState extends State<HomeAdmin> {
                 children: [
                   Positioned(
                       top: 5,
-                      left: 330,
+                      //left: 330,
+                      left: MediaQuery.of(context).size.width - 50,
                       child: InkWell(
                         onTap: (){
 
@@ -543,7 +544,8 @@ class _HomeAdminState extends State<HomeAdmin> {
           left: 37,
           child: Container(
             height: 170,
-            width: 320,
+            //width: 320,
+            width: MediaQuery.of(context).size.width*0.8,
             decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(

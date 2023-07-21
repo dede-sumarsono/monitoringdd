@@ -186,7 +186,7 @@ class _RubahLevelUser1State extends State<RubahLevelUser1> {
                             //.push(MaterialPageRoute(builder: (context)=>PostDataUser(idx: _foundData[index]),));
                                 .push(MaterialPageRoute(builder: (context)=>RubahLevelUser2(idx: _foundData[index]),));
 
-                            Fluttertoast.showToast(
+                            /*Fluttertoast.showToast(
                                 msg: '$index',
                                 toastLength: Toast.LENGTH_SHORT,
                                 gravity: ToastGravity.BOTTOM,
@@ -194,7 +194,7 @@ class _RubahLevelUser1State extends State<RubahLevelUser1> {
                                 backgroundColor: Colors.green,
                                 textColor: Colors.white,
                                 fontSize: 16.0
-                            );
+                            );*/
                             print(_foundData[index].toString());
                           },
                         ));

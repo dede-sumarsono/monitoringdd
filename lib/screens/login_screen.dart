@@ -2,6 +2,7 @@
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:monitoringdd/screens/gantiPassword.dart';
 import 'package:monitoringdd/screens/home_screen.dart';
 import 'package:monitoringdd/screens/register_screen.dart';
 import 'package:monitoringdd/screens/splashscreen.dart';
@@ -64,6 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           margin: EdgeInsets.only(top: 10),
                           alignment: Alignment.centerRight,
                           child: Text('Lupa Password ?',
+                            style: TextStyle(color: Colors.white),
                           ),
                         ),
 
@@ -120,6 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     style: TextStyle(color: orangeColor),
                                       recognizer: TapGestureRecognizer()..onTap = (){
                                       Navigator.push(context, MaterialPageRoute(builder: (context)=>RegisterScreen()));
+                                      //Navigator.push(context, MaterialPageRoute(builder: (context)=>GantiPassword()));
                                   }
 
                                 ),

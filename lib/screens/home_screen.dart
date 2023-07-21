@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:dio/dio.dart' as Dio;
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -87,9 +89,12 @@ class _HomeScreenState extends State<HomeScreen> {
       score2 = hasil2;
 
       if (score2 == null){
-        Future.delayed(const Duration(seconds: 2));
-        readScore();
-        readToken();
+        Timer(const Duration(milliseconds: 2000),(){
+          readScore();
+          readToken();
+
+        });
+
       }
     });
 

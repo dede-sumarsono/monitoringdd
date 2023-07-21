@@ -188,7 +188,7 @@ class _LihatSemuaState extends State<LihatSemua> {
                             Navigator.of(context)
                                 .push(MaterialPageRoute(builder: (context)=>LihatSemuaDetail(idx: _foundData[index]),));
 
-                            Fluttertoast.showToast(
+                            /*Fluttertoast.showToast(
                                 msg: '$index',
                                 toastLength: Toast.LENGTH_SHORT,
                                 gravity: ToastGravity.BOTTOM,
@@ -196,7 +196,7 @@ class _LihatSemuaState extends State<LihatSemua> {
                                 backgroundColor: Colors.green,
                                 textColor: Colors.white,
                                 fontSize: 16.0
-                            );
+                            );*/
                             print(_foundData[index].toString());
                           },
                         ));

@@ -21,6 +21,7 @@ import 'package:provider/provider.dart';
 import '../services/auth.dart';
 import '../services/dio.dart';
 import '../widgets/header_container.dart';
+import 'gantiPassword.dart';
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen({Key? key}) : super(key: key);
@@ -248,7 +249,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               image: DecorationImage(
                                 //image: FileImage(selectedImage!),
                                   image: NetworkImage(
-                                      "http://10.0.2.2/monitoringdd/public/api/downloadAvatar"
+                                      //"http://10.0.2.2/monitoringdd/public/api/downloadAvatar"
+                                      "https://monitoringdedesumarsono.000webhostapp.com/public/api/downloadAvatar"
                                           ,headers: {'accept':'Application/Json','Authorization' : 'Bearer $_tooken'}
                                           //,headers: {'accept':'Application/Json','Authorization' : 'Bearer $_tooken',"Content-type":"multipart/form-data"}
 
@@ -332,7 +334,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         height: 30,
                       ),
 
-                      ButtonWidget(btnText: 'Update Image',onClick: () {
+                      ButtonWidget(btnText: 'Update Foto Profile',onClick: () {
                        //userdata.user!.username
 
                         //getImage(ImageSource.camera, userdata.user!.id);
@@ -344,6 +346,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       },),
 
                       SizedBox(height: 15,),
+
+
+                      ButtonWidget(btnText: 'Rubah Password',onClick: () {
+
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>GantiPassword()));
+
+
+                      },),
+
+                      SizedBox(height: 15,),
+
 
                       ButtonWidget(btnText: 'Log Out',onClick: () {
                         AwesomeDialog(

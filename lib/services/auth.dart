@@ -42,6 +42,29 @@ class Auth extends ChangeNotifier{
 
     } catch(e){
       print(e);
+
+      String toast = "Register Gagal";
+      Fluttertoast.showToast(
+          msg: toast,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+
+
     }
     notifyListeners();
   }
@@ -66,7 +89,7 @@ class Auth extends ChangeNotifier{
           textColor: Colors.white,
           fontSize: 16.0);
 
-          String toast2 = 'token adalah $token';
+          /*String toast2 = 'token adalah $token';
       Fluttertoast.showToast(
           msg: toast2,
           toastLength: Toast.LENGTH_SHORT,
@@ -75,7 +98,7 @@ class Auth extends ChangeNotifier{
           backgroundColor: Colors.green,
           textColor: Colors.white,
           fontSize: 16.0
-      );
+      );*/
 
       _isLoggedIn = true;
     } catch(e){
@@ -218,7 +241,62 @@ class Auth extends ChangeNotifier{
 
 
     } catch(e){
+      String toast = "User tidak dapat diUpdate";
+      Fluttertoast.showToast(
+          msg: toast,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+
       print(e);
+    }
+    notifyListeners();
+
+  }
+
+  void rubahPassword ({required Map creds}) async {
+    try{
+      Dio.Response response = await dio().post('/updatePassword',data: creds,options: Dio.Options(headers: {'Authorization' : 'Bearer $_token'}));
+      print(response.data.toString());
+
+      String toast = response.data['message'].toString();
+      Fluttertoast.showToast(
+          msg: toast,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+
+
+    } catch(e){
+      print(e);
+
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
     }
     notifyListeners();
 
@@ -266,6 +344,28 @@ class Auth extends ChangeNotifier{
 
 
     } catch(e){
+
+      String toast = 'User gagal dihapus';
+      Fluttertoast.showToast(
+          msg: toast,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+
       print(e);
     }
     notifyListeners();
@@ -343,6 +443,28 @@ class Auth extends ChangeNotifier{
 
 
     } catch(e){
+
+      String toast = 'Data Gagal Dihapus';
+      Fluttertoast.showToast(
+          msg: toast,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+
+      Fluttertoast.showToast(
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+
       print(e);
     }
     notifyListeners();

@@ -203,7 +203,7 @@ class _PickUserState extends State<PickUser> {
                                 //.push(MaterialPageRoute(builder: (context)=>PostDataUser(idx: _foundData[index]),));
                                 .push(MaterialPageRoute(builder: (context)=>PostDataUser2(idx: _foundData[index]),));
 
-                            Fluttertoast.showToast(
+                            /*Fluttertoast.showToast(
                                 msg: '$index',
                                 toastLength: Toast.LENGTH_SHORT,
                                 gravity: ToastGravity.BOTTOM,
@@ -211,7 +211,7 @@ class _PickUserState extends State<PickUser> {
                                 backgroundColor: Colors.green,
                                 textColor: Colors.white,
                                 fontSize: 16.0
-                            );
+                            );*/
                             print(_foundData[index].toString());
                           },
                         ));
