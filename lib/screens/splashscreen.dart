@@ -1,5 +1,6 @@
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:dio/dio.dart' as Dio;
 import 'package:flutter/material.dart';
@@ -41,29 +42,35 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     readToken();
-    Timer(const Duration(milliseconds: 4000),(){
 
-      //Navigator.push(context, MaterialPageRoute(builder: (contex)=>HomeScreen()));
+    new Timer.periodic(Duration(seconds: 4), (Timer timer) {
+      if (_token ==null) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (contex) => LoginScreen()));
+      }else{
+
+      }
+      if (!mounted) {
+        timer.cancel();
+      } else {
+        /*setState(() {
+
+        });*/
+      }
+      timer.cancel();
+    });
+
+
+    /*Timer(const Duration(milliseconds: 4000),(){
+
 
       if (_token ==null) {
         Navigator.push(
             context, MaterialPageRoute(builder: (contex) => LoginScreen()));
       }else{
-        //Route route = MaterialPageRoute(builder: (context) => HomeScreen());
-
-
-        /*Timer(const Duration(milliseconds: 4000),(){
-
-        });*/
-
-
-        //Route route = MaterialPageRoute(builder: (context) => HomeScreenNavBar());
-        //Navigator.pushReplacement(context, route);
-
-
 
       }
-    });
+    });*/
 
 
 
@@ -78,19 +85,33 @@ class _SplashScreenState extends State<SplashScreen> {
     }else if(level==2){
       Route route = MaterialPageRoute(builder: (context) => HomeScreenNavBar());
       Navigator.pushReplacement(context, route);
+
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
 
     final userdata = Provider.of<Auth>(context);
 
-    //Timer(const Duration(milliseconds: 3000)(){})
-    Timer(const Duration(milliseconds: 3000),(){
+    new Timer.periodic(Duration(seconds: 3), (Timer timer) {
+      masuk(userdata.user!.level);
+      if (!mounted) {
+
+        timer.cancel();
+      } else {
+        /*setState(() {
+
+        });*/
+      }
+      timer.cancel();
+    });
+
+    /*Timer(const Duration(milliseconds: 3000),(){
       masuk(userdata.user!.level);
 
-    });
+    });*/
 
     return Scaffold(
 

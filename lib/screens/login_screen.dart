@@ -1,5 +1,8 @@
 
 
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:monitoringdd/screens/gantiPassword.dart';
@@ -83,10 +86,12 @@ class _LoginScreenState extends State<LoginScreen> {
                               if(_formKey.currentState!.validate()){
                                 Provider.of<Auth>(context,listen: false)
                                     .login(creds: creds);
-                                //Navigator.pop(context);
-                                //Route route = MaterialPageRoute(builder: (context) => HomeScreen());
                                 Route route = MaterialPageRoute(builder: (context) => SplashScreen());
                                 Navigator.pushReplacement(context, route);
+
+
+
+
                               }
 
                             },

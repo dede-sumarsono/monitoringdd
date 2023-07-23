@@ -83,19 +83,19 @@ class _HomeScreenState extends State<HomeScreen> {
     print('jadi hasilnya adalah $hasil');
     print('jadi hasilnya adalah $hasil2');
 
-    setState(() {
 
-      score = hasil;
-      score2 = hasil2;
 
-      if (score2 == null){
-        Timer(const Duration(milliseconds: 2000),(){
-          readScore();
-          readToken();
+    new Timer.periodic(Duration(seconds: 1), (Timer timer) {
+      if(hasil2 != null){
+        setState(() {
+            score = hasil;
+            score2 = hasil2;
+          });
 
-        });
-
+      }else{
+        //readScore();
       }
+      timer.cancel();
     });
 
   }
@@ -108,13 +108,20 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final userdata = Provider.of<Auth>(context);
 
-
+    new Timer.periodic(Duration(seconds: 4), (Timer timer) {
+      if(score2 == null){
+        readScore();
+      }else{
+        timer.cancel();
+      }
+    });
 
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: orangeLightColor,
       body:
-      score2 == null ? Center(child: CircularProgressIndicator(
+      userdata.user!.username == null ? Center(child: CircularProgressIndicator(
+      //score2 == null ? Center(child: CircularProgressIndicator(
         color: Colors.white,)) :
       Container(
         decoration: BoxDecoration(
@@ -218,7 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 20,
+                    fontSize: 16,
                   ),
                 ),
                 InkWell(
@@ -228,12 +235,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                   child: Container(
                     child: Text(
-                      'Lihat Semua >',
+                      'Lihat Semua ',
                       style: TextStyle(
                         //color: Colors.white,
                         color: Colors.white70,
                         fontWeight: FontWeight.bold,
-                        fontSize: 15,
+                        fontSize: 12,
                       ),
 
                     ),
@@ -274,6 +281,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      score == null ? CircularProgressIndicator(color: Colors.white,):
                       Text(
                         '$score',
                         style: TextStyle(
@@ -282,13 +290,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+
+
                       Text('.....'),
                       Icon(
                         Icons.alarm,
                         color: Colors.white,
                       ),
                       Text('.....'),
-                      Text(
+
+                      score2 == null ? CircularProgressIndicator(color: Colors.white,): Text(
                         //'0',
                         '$score2',
                         style: TextStyle(
@@ -307,7 +318,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Container(
                         height: 20,
-                        width: 150,
+                        //width: 150,
+                        width: MediaQuery.of(context).size.width*0.35,
                         decoration: BoxDecoration(
                           //color: Color.fromRGBO(173, 206, 225, 100),
                           color: Color(0xffff4a00),
@@ -318,6 +330,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Text(
                             'Dokumen - Notaris',
                             style: TextStyle(
+                              fontSize: 11,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                               //color: Color.fromRGBO(63, 126, 164, 100),
@@ -327,7 +340,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Container(
                         height: 20,
-                        width: 150,
+                        //width: 150,
+                        width: MediaQuery.of(context).size.width*0.35,
                         decoration: BoxDecoration(
                           color: Color(0xffff4a00),
                           borderRadius: BorderRadius.circular(5),
@@ -336,6 +350,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Text(
                             'Notaris - BPN',
                             style: TextStyle(
+                              fontSize: 11,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                             ),
@@ -357,7 +372,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   'Pelayanan Notaris',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 20,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -393,7 +408,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   'Kantor Notaris',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 20,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

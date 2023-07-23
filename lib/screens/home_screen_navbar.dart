@@ -22,6 +22,9 @@ class _HomeScreenNavBarState extends State<HomeScreenNavBar> {
   @override
   void initState() {
     readToken();
+    setState(() {
+      print('refresh');
+    });
     super.initState();
   }
 
@@ -34,9 +37,11 @@ class _HomeScreenNavBarState extends State<HomeScreenNavBar> {
   int _selectedIndex = 1;
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    if(mounted){
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
   }
 
   List<Widget> _widgetOptions = <Widget>[
